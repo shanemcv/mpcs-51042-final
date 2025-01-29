@@ -21,4 +21,3 @@ TO DO LIST:
  - Week 7: Add locations and new fish species to allow for gameplay variety. Add logic to when fish are "available" (certain times of day, months). Allow players to unlock location through shop. 
  - Week 8: Add achievements to the game. Allow the player to check their achievements and requirements for achievements that have not been completed yet.  
  - Week 9: Convert the game into an executable and downloadable program. 
- - 
