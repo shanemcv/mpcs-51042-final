@@ -6,6 +6,7 @@ from fish import Species, Fish
 from player import Player
 import tkinter as tk
 from tkinter import messagebox
+from locations import Location
 
 def get_species():
     '''create the species list'''
@@ -24,12 +25,32 @@ def get_species():
     ]
 
     return species_list
+
+def get_locations(player):
+    '''create the locations list. checks if player has unlocked any locations beyond the default'''
+
+    locations_list = [
+        Location("Local Pond", 0, True),
+        Location("Timberflow River", 1000),
+        Location("Blueberry Lake", 2000),
+        Location("Titan Lake", 5000),
+        Location("Deep Blue Sea", 10000),
+        Location("Twilight Fjord", 25000),
+        Location("Eternal Springs", 100000),
+    ]
+
+    for location in locations_list:
+        if location.name in player.unlocked_locations:
+            location.unlocked = True
+
+    return locations_list
     
 class GameApp:
     def __init__(self, root):
 
         # Game info
         self.species_list = get_species()
+        
 
         # Root tkinter stuff
         self.root = root
@@ -77,6 +98,7 @@ class GameApp:
                                    text="Catch Fish!", 
                                    command=lambda: self.catch_fish(self.species_list,self.player)) # lambda means this function isn't called immediately.
         self.back_to_main_button = tk.Button(self.root,text="Main Menu", command=self.show_main_menu)
+
         # Create a Text widget for logging actions
         self.textbox = tk.Text(self.root, height=5, width=120, wrap=tk.WORD, state=tk.DISABLED, font=("Arial", 10))
 
@@ -90,6 +112,9 @@ class GameApp:
 
         # Caught Species Page options
         self.back_to_encyclopedia_button = tk.Button(self.root, text="Back to Encyclopedia", command=self.view_encyclopedia)
+
+        # Location Page Options
+
 
         # Inventory buttons - initially hidden
         self.inventory_label = tk.Label(self.root, text="Inventory", font=("Arial", 14))
@@ -121,6 +146,11 @@ class GameApp:
         # player_data = {}
         # player_data[username] = self.player  # Save the new player data
         messagebox.showinfo("Welcome", f"Welcome, {self.player.username}!")
+
+        # initialize locations based on player
+        self.locations_list = get_locations(self.player)
+        self.current_location = self.locations_list[0] # start at Local Pond
+        self.location_buttons = []
 
         # Hide username prompt and start button
         self.username_label.pack_forget()
@@ -162,6 +192,10 @@ class GameApp:
         self.sell_all_fish_button.pack_forget()
         self.caught_species_button.pack_forget()
         self.caught_species_textbox.pack_forget()
+        # including location unlocks
+        if self.location_buttons != []:
+            for location_button in self.location_buttons:
+                location_button.pack_forget()
 
         # Show game buttons
         self.main_menu_label.pack(side="top", pady=10)
@@ -176,6 +210,9 @@ class GameApp:
         self.inventory_label.pack(side="top", pady=10)
         self.inventory_listbox.pack(side="top", pady=10)
         self.update_inventory()
+
+        # Player gold display
+        self.gold_label.pack(side="right", padx=10)
     
     def go_fishing(self,species_list,player):
         '''fishing loop'''
@@ -272,7 +309,7 @@ class GameApp:
 
         # update gold label
         self.gold_label.config(text=f"{self.player.gold}")
-        
+
         # Update the inventory at the end            
         self.update_inventory()
 
@@ -291,6 +328,7 @@ class GameApp:
         self.inventory_listbox.pack_forget()
         self.back_to_encyclopedia_button.pack_forget()
         self.caught_species_textbox.pack_forget()
+        self.gold_label.pack_forget()
 
         # Set up buttons on main encylopedia page
         self.caught_species_button.pack(side="left", padx=10)
@@ -313,7 +351,61 @@ class GameApp:
         self.back_to_encyclopedia_button.pack()
 
     def view_locations(self):
-        print("You chose to view locations!")
+        '''location options'''
+
+        # Hide buttons I don't want on this page
+        self.main_menu_label.pack_forget()
+        self.go_fishing_button.pack_forget()
+        self.shop_button.pack_forget()
+        self.encyclopedia_button.pack_forget()
+        self.locations_button.pack_forget()
+        self.gear_button.pack_forget()
+        self.quit_button.pack_forget()
+        self.inventory_label.pack_forget()
+        self.inventory_listbox.pack_forget()
+        self.back_to_encyclopedia_button.pack_forget()
+        self.caught_species_textbox.pack_forget()
+
+        # Set up buttons to show on this page
+        self.back_to_main_button.pack(side="left", padx=10)
+
+        # Location buttons
+        self.location_buttons = []
+        for location in self.locations_list:
+            color = "green" if location.unlocked else "red"
+            button_text = f"{location.name}\n{'Unlocked' if location.unlocked else f'Locked\n{location.unlock_price} gold'}"
+            button = tk.Button(self.root, text=button_text, fg=color, font=("Arial", 10), command=lambda l=location: self.select_or_unlock(l))
+            button.pack(pady=5)
+            self.location_buttons.append(button)
+
+    def select_or_unlock(self, location):
+        '''handles location change or unlock'''
+
+        if location.unlocked:
+            self.current_location = location
+            messagebox.showinfo("Location changed", f"You moved to {location.name}!")
+
+        else: 
+            # unlock location if enough gold
+            if self.player.gold >= location.unlock_price:
+                self.player.gold -= location.unlock_price
+                location.unlocked = True
+                self.player.unlocked_locations.add(location.name)
+                messagebox.showinfo("Location unlocked!", f"You have unlocked {location.name}!")
+                self.update_location_buttons()
+                # update gold label
+                self.gold_label.config(text=f"{self.player.gold}")
+            else:
+                # player doesn't have enough gold
+                messagebox.showwarning("Not enough gold!", f"You do not have enough gold to unlock {location.name}!")
+    
+    def update_location_buttons(self):
+        '''updates location buttons after unlock'''
+        for index, location in enumerate(self.locations_list):
+            color = "green" if location.unlocked else "red"
+            button_text = f"{location.name}\n{'Unlocked' if location.unlocked else f'Locked\n{location.unlock_price} gold'}"
+            self.location_buttons[index].config(text=button_text,fg=color)
+
 
     def view_gear(self):
         print("You chose to view gear!")
