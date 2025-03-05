@@ -11,7 +11,7 @@ from locations import Location
 def get_species():
     '''create the species list'''
 
-    species_list = [
+    '''species_list = [
     Species("Bluegill", "A small, common freshwater fish found in ponds and lakes.", "bronze", 0.5, 6, 1, 0.1, 0.02),
     Species("Largemouth Bass", "A popular game fish known for its aggressive strikes.", "bronze", 0.6, 18, 3, 0.15, 0.05),
     Species("Rainbow Trout", "A colorful freshwater fish prized by anglers.", "silver", 0.3, 16, 2, 0.12, 0.04),
@@ -22,6 +22,69 @@ def get_species():
     Species("Golden Dorado", "A stunning, rare freshwater fish revered by anglers.", "diamond", 0.02, 36, 6, 0.6, 0.2),
     Species("Giant Trevally", "A strong ocean fish sought after for its challenge and size.", "diamond", 0.01, 48, 8, 0.8, 0.3),
     Species("Arctic Char", "A rare, cold-water fish with vibrant coloration.", "diamond", 0.005, 28, 3, 0.18, 0.05)
+    ]'''
+
+    species_list = [
+    Species("Bluegill", "A small, common freshwater fish found in ponds and lakes.", "bronze", 0.8, 20, 5, 0.5, 0.15),
+    Species("Largemouth Bass", "A popular game fish known for its aggressive strikes.", "bronze", 0.7, 45, 10, 0.8, 0.2),
+    Species("Pumpkinseed Sunfish", "A colorful sunfish commonly found in ponds and lakes.", "bronze", 0.75, 18, 4, 0.4, 0.1),
+    Species("Yellow Perch", "A small, yellow fish with black vertical stripes.", "silver", 0.6, 30, 8, 0.6, 0.18),
+    Species("Northern Pike", "A predatory fish with sharp teeth and a sleek body.", "silver", 0.55, 70, 12, 1.2, 0.25),
+    Species("Catfish", "A bottom-dwelling fish with a wide range of sizes.", "silver", 0.5, 60, 15, 1.0, 0.3),
+    Species("Crappie", "A popular panfish known for its delicate taste and light catch.", "gold", 0.4, 40, 10, 0.7, 0.2),
+    Species("Muskellunge", "A large and rare predator fish found in northern waters.", "gold", 0.3, 120, 20, 2.0, 0.4),
+    Species("Walleye", "A predatory fish known for its sharp eyes and taste.", "platinum", 0.25, 60, 18, 1.5, 0.35),
+    Species("Giant Freshwater Ray", "A massive, rare fish with incredible strength.", "diamond", 0.05, 250, 40, 3.0, 0.5),
+    Species("Rainbow Trout", "A colorful freshwater fish prized by anglers.", "bronze", 0.75, 40, 7, 0.6, 0.15),
+    Species("Brook Trout", "A small freshwater fish found in cold, fast-moving streams.", "bronze", 0.8, 30, 6, 0.5, 0.2),
+    Species("Brown Trout", "A hearty fish with a distinct brown coloration, commonly found in rivers.", "bronze", 0.7, 50, 8, 0.7, 0.2),
+    Species("Atlantic Salmon", "A migratory fish with excellent fighting abilities, native to rivers.", "silver", 0.6, 80, 15, 1.2, 0.3),
+    Species("Steelhead Salmon", "A variant of the rainbow trout, known for its ocean migrations.", "silver", 0.55, 75, 12, 1.1, 0.25),
+    Species("Smallmouth Bass", "A popular river fish known for its strong fight.", "silver", 0.5, 35, 7, 1.0, 0.25),
+    Species("Channel Catfish", "A bottom-dwelling river fish known for its whiskers and aggressive bite.", "gold", 0.45, 70, 14, 1.3, 0.3),
+    Species("Flathead Catfish", "A large, predatory catfish found in slow-moving river bends.", "gold", 0.4, 100, 18, 1.7, 0.35),
+    Species("Tiger Muskie", "A hybrid of muskellunge and northern pike, known for its size and strength.", "platinum", 0.2, 130, 24, 2.0, 0.45),
+    Species("Paddlefish", "A prehistoric river fish with a long, flat snout and filter-feeding habits.", "diamond", 0.15, 150, 30, 2.5, 0.45),
+    Species("American Shad", "A migratory species known for its remarkable spawning runs.", "bronze", 0.7, 20, 5, 0.8, 0.2),
+    Species("Coho Salmon", "A cold-water salmon with a silver sheen, prized by anglers.", "bronze", 0.6, 25, 6, 0.9, 0.3),
+    Species("Alligator Gar", "A large, prehistoric fish known for its toothy grin and armored scales.", "silver", 0.5, 150, 30, 2.0, 0.4),
+    Species("Peacock Bass", "A colorful, predatory species native to South American waters.", "silver", 0.4, 30, 7, 1.0, 0.3),
+    Species("Clown Knifefish", "A predatory fish with a unique body shape and long fin, native to Southeast Asia.", "silver", 0.3, 36, 8, 1.1, 0.4),
+    Species("Snakehead", "An aggressive, invasive species with a voracious appetite.", "gold", 0.35, 45, 9, 1.2, 0.5),
+    Species("Oscar", "A highly intelligent, territorial cichlid found in slow-moving waters.", "gold", 0.3, 18, 5, 0.7, 0.25),
+    Species("Golden Shiner", "A small, common baitfish that thrives in lakes and ponds.", "platinum", 0.2, 12, 3, 0.4, 0.1),
+    Species("Panfish", "A variety of small fish that includes bluegill, sunfish, and crappie.", "platinum", 0.2, 10, 2, 0.3, 0.1),
+    Species("Midas Cichlid", "A beautiful freshwater fish, known for its bright colors and territorial behavior.", "diamond", 0.1, 15, 4, 0.6, 0.2),
+    Species("American Sturgeon", "A large, ancient fish known for its bony plates and powerful swim.", "silver", 0.6, 72, 12, 4.0, 0.7),
+    Species("Black Acara", "A striking freshwater cichlid with vibrant blue and black coloration.", "silver", 0.4, 18, 5, 0.7, 0.3),
+    Species("Jaguar Guapote", "A predatory fish from Central America with a beautiful spotted pattern.", "gold", 0.5, 24, 6, 1.0, 0.4),
+    Species("Musky Fish", "A large predatory fish known for its elusive nature and razor-sharp teeth.", "gold", 0.45, 50, 10, 1.5, 0.5),
+    Species("American Eel", "A long, snake-like fish found in freshwater rivers and lakes.", "silver", 0.5, 36, 8, 1.2, 0.4),
+    Species("Freshwater Snook", "A predator found in both salt and freshwater, known for its fight.", "gold", 0.4, 30, 7, 1.3, 0.6),
+    Species("Grass Carp", "A herbivorous species that can grow to massive sizes in slow-moving waters.", "silver", 0.35, 72, 15, 3.0, 0.7),
+    Species("Brown Bullhead", "A bottom-dwelling fish with a catfish-like appearance, known for its hardy nature.", "bronze", 0.6, 14, 4, 0.5, 0.2),
+    Species("Chain Pickerel", "A slender predator with sharp teeth, resembling a smaller pike.", "silver", 0.5, 24, 6, 0.8, 0.3),
+    Species("Airbreathing Catfish", "A fish that can gulp air, allowing it to thrive in low-oxygen waters.", "diamond", 0.3, 36, 8, 1.5, 0.5),
+    Species("Lunar Tetra", "A small, shimmering fish with a bioluminescent glow, illuminating the darkest waters.", "gold", 0.2, 12, 4, 0.3, 0.1),
+    Species("Ghostly Trout", "A semi-transparent trout that glows faintly in moonlight, adding to its mysterious allure.", "platinum", 0.3, 24, 6, 0.8, 0.4),
+    Species("Silverfin Leviathan", "A massive, mythical creature with glowing silver scales that can be seen from miles away.", "diamond", 0.5, 240, 40, 12.0, 2.5),
+    Species("Frostbite Salmon", "A rare salmon with icy blue markings that thrive in frigid waters, said to grant strength.", "platinum", 0.6, 35, 7, 1.5, 0.7),
+    Species("Aurora Sturgeon", "A mythical fish with vibrant, shifting colors, like the northern lights under the water.", "diamond", 0.4, 120, 20, 5.5, 1.2),
+    Species("Crimson Merman Fish", "A deep-sea dweller with long, flowing fins that resemble the legendary merman.", "gold", 0.5, 65, 10, 3.0, 0.9),
+    Species("Violet Spotted Pike", "A predatory fish with electric violet spots that flash when hunting.", "gold", 0.7, 45, 8, 1.2, 0.5),
+    Species("Cursed Rayfish", "A ray with spiny barbs that glow ominously in the dark, rumored to curse those who catch it.", "platinum", 0.3, 80, 15, 4.5, 1.0),
+    Species("Crystal Carp", "A translucent carp whose scales reflect light like crystal, making it nearly invisible underwater.", "diamond", 0.3, 28, 6, 1.0, 0.3),
+    Species("Nightmare Fangtooth", "A vicious fish with enormous fang-like teeth and glowing red eyes, often feared by other fish.", "diamond", 0.2, 18, 4, 0.9, 0.2),
+    Species("Abyssal Emperor", "A regal fish with long, flowing fins and a crown-like structure on its head, known as the king of the spring waters.", "diamond", 0.5, 200, 50, 10.0, 2.5),
+    Species("Phoenix Carp", "A radiant, fiery-orange carp that is said to be reborn every century, with flames dancing on its scales.", "diamond", 0.4, 75, 20, 5.0, 1.5),
+    Species("Eternal Serpent", "A snake-like fish that coils in the deep waters, revered for its ancient wisdom and mystical abilities.", "diamond", 0.6, 150, 40, 7.5, 2.0),
+    Species("Golden Leviathan", "A colossal fish that glimmers like molten gold, known for its strength and size.", "platinum", 0.3, 300, 60, 15.0, 3.0),
+    Species("Springwater Dragonfish", "A legendary dragonfish that glides through the waters with shimmering green scales and fierce, jagged fins.", "platinum", 0.4, 120, 30, 8.0, 2.5),
+    Species("Celestial Sturgeon", "A giant, silver-blue sturgeon with stars reflected on its scales, often spotted during the rare celestial alignments.", "diamond", 0.2, 250, 70, 18.0, 4.0),
+    Species("Moonlit Barracuda", "A sleek and powerful fish that moves with lightning speed, glowing faintly in the moonlight.", "platinum", 0.5, 45, 15, 2.5, 1.0),
+    Species("Hydra Bass", "A multi-headed bass that regenerates quickly, said to be nearly impossible to defeat in a fishing contest.", "gold", 0.7, 60, 12, 3.0, 1.2),
+    Species("Emerald Glimmerfish", "A glowing fish with radiant green scales that seem to pulse with light, known for its elusive nature.", "gold", 0.3, 30, 8, 1.5, 0.5),
+    Species("Crystalfin Monarch", "A shimmering fish with scales like precious gems, its movement as elegant as a royal parade.", "gold", 0.4, 85, 25, 4.0, 1.0)
     ]
 
     return species_list
@@ -44,13 +107,91 @@ def get_locations(player):
             location.unlocked = True
 
     return locations_list
+
+def get_species_by_location(location):
+
+    species_dict = {
+        "Local Pond": [
+    Species("Bluegill", "A small, common freshwater fish found in ponds and lakes.", "bronze", 0.8, 20, 5, 0.5, 0.15),
+    Species("Largemouth Bass", "A popular game fish known for its aggressive strikes.", "bronze", 0.7, 45, 10, 0.8, 0.2),
+    Species("Pumpkinseed Sunfish", "A colorful sunfish commonly found in ponds and lakes.", "bronze", 0.75, 18, 4, 0.4, 0.1),
+    Species("Yellow Perch", "A small, yellow fish with black vertical stripes.", "silver", 0.6, 30, 8, 0.6, 0.18),
+    Species("Northern Pike", "A predatory fish with sharp teeth and a sleek body.", "silver", 0.55, 70, 12, 1.2, 0.25),
+    Species("Catfish", "A bottom-dwelling fish with a wide range of sizes.", "silver", 0.5, 60, 15, 1.0, 0.3),
+    Species("Crappie", "A popular panfish known for its delicate taste and light catch.", "gold", 0.4, 40, 10, 0.7, 0.2),
+    Species("Muskellunge", "A large and rare predator fish found in northern waters.", "gold", 0.3, 120, 20, 2.0, 0.4),
+    Species("Walleye", "A predatory fish known for its sharp eyes and taste.", "platinum", 0.25, 60, 18, 1.5, 0.35),
+    Species("Giant Freshwater Ray", "A massive, rare fish with incredible strength.", "diamond", 0.05, 250, 40, 3.0, 0.5)
+        ],
+        "Timberflow River": [
+    Species("Rainbow Trout", "A colorful freshwater fish prized by anglers.", "bronze", 0.75, 40, 7, 0.6, 0.15),
+    Species("Brook Trout", "A small freshwater fish found in cold, fast-moving streams.", "bronze", 0.8, 30, 6, 0.5, 0.2),
+    Species("Brown Trout", "A hearty fish with a distinct brown coloration, commonly found in rivers.", "bronze", 0.7, 50, 8, 0.7, 0.2),
+    Species("Atlantic Salmon", "A migratory fish with excellent fighting abilities, native to rivers.", "silver", 0.6, 80, 15, 1.2, 0.3),
+    Species("Steelhead Salmon", "A variant of the rainbow trout, known for its ocean migrations.", "silver", 0.55, 75, 12, 1.1, 0.25),
+    Species("Smallmouth Bass", "A popular river fish known for its strong fight.", "silver", 0.5, 35, 7, 1.0, 0.25),
+    Species("Channel Catfish", "A bottom-dwelling river fish known for its whiskers and aggressive bite.", "gold", 0.45, 70, 14, 1.3, 0.3),
+    Species("Flathead Catfish", "A large, predatory catfish found in slow-moving river bends.", "gold", 0.4, 100, 18, 1.7, 0.35),
+    Species("Tiger Muskie", "A hybrid of muskellunge and northern pike, known for its size and strength.", "platinum", 0.2, 130, 24, 2.0, 0.45),
+    Species("Paddlefish", "A prehistoric river fish with a long, flat snout and filter-feeding habits.", "diamond", 0.15, 150, 30, 2.5, 0.45)
+        ],
+        "Blueberry Lake": [
+    Species("American Shad", "A migratory species known for its remarkable spawning runs.", "bronze", 0.7, 20, 5, 0.8, 0.2),
+    Species("Coho Salmon", "A cold-water salmon with a silver sheen, prized by anglers.", "bronze", 0.6, 25, 6, 0.9, 0.3),
+    Species("Alligator Gar", "A large, prehistoric fish known for its toothy grin and armored scales.", "silver", 0.5, 150, 30, 2.0, 0.4),
+    Species("Peacock Bass", "A colorful, predatory species native to South American waters.", "silver", 0.4, 30, 7, 1.0, 0.3),
+    Species("Clown Knifefish", "A predatory fish with a unique body shape and long fin, native to Southeast Asia.", "silver", 0.3, 36, 8, 1.1, 0.4),
+    Species("Snakehead", "An aggressive, invasive species with a voracious appetite.", "gold", 0.35, 45, 9, 1.2, 0.5),
+    Species("Oscar", "A highly intelligent, territorial cichlid found in slow-moving waters.", "gold", 0.3, 18, 5, 0.7, 0.25),
+    Species("Golden Shiner", "A small, common baitfish that thrives in lakes and ponds.", "platinum", 0.2, 12, 3, 0.4, 0.1),
+    Species("Panfish", "A variety of small fish that includes bluegill, sunfish, and crappie.", "platinum", 0.2, 10, 2, 0.3, 0.1),
+    Species("Midas Cichlid", "A beautiful freshwater fish, known for its bright colors and territorial behavior.", "diamond", 0.1, 15, 4, 0.6, 0.2)
+        ],
+        "Titan Lake": [
+    Species("American Sturgeon", "A large, ancient fish known for its bony plates and powerful swim.", "silver", 0.6, 72, 12, 4.0, 0.7),
+    Species("Black Acara", "A striking freshwater cichlid with vibrant blue and black coloration.", "silver", 0.4, 18, 5, 0.7, 0.3),
+    Species("Jaguar Guapote", "A predatory fish from Central America with a beautiful spotted pattern.", "gold", 0.5, 24, 6, 1.0, 0.4),
+    Species("Musky Fish", "A large predatory fish known for its elusive nature and razor-sharp teeth.", "gold", 0.45, 50, 10, 1.5, 0.5),
+    Species("American Eel", "A long, snake-like fish found in freshwater rivers and lakes.", "silver", 0.5, 36, 8, 1.2, 0.4),
+    Species("Freshwater Snook", "A predator found in both salt and freshwater, known for its fight.", "gold", 0.4, 30, 7, 1.3, 0.6),
+    Species("Grass Carp", "A herbivorous species that can grow to massive sizes in slow-moving waters.", "silver", 0.35, 72, 15, 3.0, 0.7),
+    Species("Brown Bullhead", "A bottom-dwelling fish with a catfish-like appearance, known for its hardy nature.", "bronze", 0.6, 14, 4, 0.5, 0.2),
+    Species("Chain Pickerel", "A slender predator with sharp teeth, resembling a smaller pike.", "silver", 0.5, 24, 6, 0.8, 0.3),
+    Species("Airbreathing Catfish", "A fish that can gulp air, allowing it to thrive in low-oxygen waters.", "diamond", 0.3, 36, 8, 1.5, 0.5)
+        ],
+        "Twilight Fjord": [
+    Species("Lunar Tetra", "A small, shimmering fish with a bioluminescent glow, illuminating the darkest waters.", "gold", 0.2, 12, 4, 0.3, 0.1),
+    Species("Ghostly Trout", "A semi-transparent trout that glows faintly in moonlight, adding to its mysterious allure.", "platinum", 0.3, 24, 6, 0.8, 0.4),
+    Species("Silverfin Leviathan", "A massive, mythical creature with glowing silver scales that can be seen from miles away.", "diamond", 0.5, 240, 40, 12.0, 2.5),
+    Species("Frostbite Salmon", "A rare salmon with icy blue markings that thrive in frigid waters, said to grant strength.", "platinum", 0.6, 35, 7, 1.5, 0.7),
+    Species("Aurora Sturgeon", "A mythical fish with vibrant, shifting colors, like the northern lights under the water.", "diamond", 0.4, 120, 20, 5.5, 1.2),
+    Species("Crimson Merman Fish", "A deep-sea dweller with long, flowing fins that resemble the legendary merman.", "gold", 0.5, 65, 10, 3.0, 0.9),
+    Species("Violet Spotted Pike", "A predatory fish with electric violet spots that flash when hunting.", "gold", 0.7, 45, 8, 1.2, 0.5),
+    Species("Cursed Rayfish", "A ray with spiny barbs that glow ominously in the dark, rumored to curse those who catch it.", "platinum", 0.3, 80, 15, 4.5, 1.0),
+    Species("Crystal Carp", "A translucent carp whose scales reflect light like crystal, making it nearly invisible underwater.", "diamond", 0.3, 28, 6, 1.0, 0.3),
+    Species("Nightmare Fangtooth", "A vicious fish with enormous fang-like teeth and glowing red eyes, often feared by other fish.", "diamond", 0.2, 18, 4, 0.9, 0.2)
+        ],
+        "Eternal Springs": [
+    Species("Abyssal Emperor", "A regal fish with long, flowing fins and a crown-like structure on its head, known as the king of the spring waters.", "diamond", 0.5, 200, 50, 10.0, 2.5),
+    Species("Phoenix Carp", "A radiant, fiery-orange carp that is said to be reborn every century, with flames dancing on its scales.", "diamond", 0.4, 75, 20, 5.0, 1.5),
+    Species("Eternal Serpent", "A snake-like fish that coils in the deep waters, revered for its ancient wisdom and mystical abilities.", "diamond", 0.6, 150, 40, 7.5, 2.0),
+    Species("Golden Leviathan", "A colossal fish that glimmers like molten gold, known for its strength and size.", "platinum", 0.3, 300, 60, 15.0, 3.0),
+    Species("Springwater Dragonfish", "A legendary dragonfish that glides through the waters with shimmering green scales and fierce, jagged fins.", "platinum", 0.4, 120, 30, 8.0, 2.5),
+    Species("Celestial Sturgeon", "A giant, silver-blue sturgeon with stars reflected on its scales, often spotted during the rare celestial alignments.", "diamond", 0.2, 250, 70, 18.0, 4.0),
+    Species("Moonlit Barracuda", "A sleek and powerful fish that moves with lightning speed, glowing faintly in the moonlight.", "platinum", 0.5, 45, 15, 2.5, 1.0),
+    Species("Hydra Bass", "A multi-headed bass that regenerates quickly, said to be nearly impossible to defeat in a fishing contest.", "gold", 0.7, 60, 12, 3.0, 1.2),
+    Species("Emerald Glimmerfish", "A glowing fish with radiant green scales that seem to pulse with light, known for its elusive nature.", "gold", 0.3, 30, 8, 1.5, 0.5),
+    Species("Crystalfin Monarch", "A shimmering fish with scales like precious gems, its movement as elegant as a royal parade.", "gold", 0.4, 85, 25, 4.0, 1.0)
+        ]
+    }
+
+    return species_dict.get(location.name, [])
     
 class GameApp:
     def __init__(self, root):
 
         # Game info
         self.species_list = get_species()
-        
 
         # Root tkinter stuff
         self.root = root
@@ -113,9 +254,6 @@ class GameApp:
         # Caught Species Page options
         self.back_to_encyclopedia_button = tk.Button(self.root, text="Back to Encyclopedia", command=self.view_encyclopedia)
 
-        # Location Page Options
-
-
         # Inventory buttons - initially hidden
         self.inventory_label = tk.Label(self.root, text="Inventory", font=("Arial", 14))
         self.inventory_listbox = tk.Listbox(self.root, height=16, width=30, font=("Arial", 10))
@@ -151,6 +289,9 @@ class GameApp:
         self.locations_list = get_locations(self.player)
         self.current_location = self.locations_list[0] # start at Local Pond
         self.location_buttons = []
+
+        # # update catch fish button to respect the current location
+        self.catch_fish_button.config(command=lambda: self.catch_fish(get_species_by_location(self.current_location), self.player))
 
         # Hide username prompt and start button
         self.username_label.pack_forget()
@@ -213,6 +354,9 @@ class GameApp:
 
         # Player gold display
         self.gold_label.pack(side="right", padx=10)
+
+        # update catch fish button to respect the current location
+        self.catch_fish_button.config(command=lambda: self.catch_fish(get_species_by_location(self.current_location), self.player))
     
     def go_fishing(self,species_list,player):
         '''fishing loop'''

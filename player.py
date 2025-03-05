@@ -107,7 +107,7 @@ class Player:
     
     def initialize_gold(self):
         '''initialize the player's gold, loading from a previous save if applicable'''
-        self.gold = 100000
+        self.gold = 1000000
 
         # Reading the pickle file to update caught species list. 
         filepath = f'./player_data/.{self.username}/.{self.username}.gold.pickle'
