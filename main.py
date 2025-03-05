@@ -65,6 +65,25 @@ def get_species():
     Species("Brown Bullhead", "A bottom-dwelling fish with a catfish-like appearance, known for its hardy nature.", "bronze", 0.6, 14, 4, 0.5, 0.2),
     Species("Chain Pickerel", "A slender predator with sharp teeth, resembling a smaller pike.", "silver", 0.5, 24, 6, 0.8, 0.3),
     Species("Airbreathing Catfish", "A fish that can gulp air, allowing it to thrive in low-oxygen waters.", "diamond", 0.3, 36, 8, 1.5, 0.5),
+    Species("Mackerel", "A fast-swimming fish found in schools.", "bronze", 0.25, 14, 3, 0.2, 1.5),
+    Species("Sardine", "A small, silvery fish often caught in large numbers.", "bronze", 0.3, 6, 1.5, 0.1, 0.5),
+    Species("Triggerfish", "A reef-dwelling fish with strong jaws.", "bronze", 0.2, 12, 2.5, 0.3, 1.2),
+    Species("Grunt Fish", "Named for the grunting sounds they make.", "bronze", 0.25, 10, 2, 0.25, 1),
+    Species("Bonito", "A torpedo-shaped fish related to tuna.", "bronze", 0.15, 20, 4, 0.5, 2),
+    Species("Hogfish", "A reef fish known for its pig-like snout.", "silver", 0.1, 18, 3.5, 0.6, 2.5),
+    Species("Lookdown Fish", "A shiny, disk-shaped fish with a reflective body.", "silver", 0.1, 16, 3, 0.4, 2),
+    Species("Spotted Drum", "A striking black-and-white fish with a long dorsal fin.", "silver", 0.08, 14, 3, 0.35, 1.8),
+    Species("Blacktip Shark", "A sleek shark species common in shallow waters.", "silver", 0.07, 50, 6, 2.5, 5),
+    Species("Yellowtail Snapper", "A colorful snapper with a bright yellow stripe.", "silver", 0.08, 24, 5, 1.2, 3),
+    Species("Barracuda", "A fierce predator with razor-sharp teeth.", "gold", 0.05, 36, 6, 2, 4.5),
+    Species("Queen Angelfish", "A vibrant reef fish with electric blue and yellow colors.", "gold", 0.06, 18, 4, 0.8, 2.8),
+    Species("Cobia", "A powerful fish known for its shark-like appearance.", "gold", 0.04, 40, 7, 2.8, 6),
+    Species("Tarpon", "A large, silver fish famous for its leaps.", "gold", 0.03, 60, 8, 3, 7),
+    Species("Mahi-Mahi", "A dazzling blue-green fish prized for its speed and taste.", "gold", 0.02, 48, 7, 2.2, 5.5),
+    Species("Sailfish", "One of the fastest fish in the ocean, with a massive sail-like fin.", "platinum", 0.015, 70, 9, 3.5, 8),
+    Species("Bluefin Tuna", "A highly prized deep-sea fish known for its strength.", "platinum", 0.01, 96, 10, 4, 10),
+    Species("Goliath Grouper", "A massive reef fish capable of reaching enormous sizes.", "platinum", 0.008, 84, 12, 4.5, 12),
+    Species("Oarfish", "A mysterious deep-sea fish with a long, ribbon-like body.", "diamond", 0.005, 200, 20, 6, 15),
     Species("Lunar Tetra", "A small, shimmering fish with a bioluminescent glow, illuminating the darkest waters.", "gold", 0.2, 12, 4, 0.3, 0.1),
     Species("Ghostly Trout", "A semi-transparent trout that glows faintly in moonlight, adding to its mysterious allure.", "platinum", 0.3, 24, 6, 0.8, 0.4),
     Species("Silverfin Leviathan", "A massive, mythical creature with glowing silver scales that can be seen from miles away.", "diamond", 0.5, 240, 40, 12.0, 2.5),
@@ -159,6 +178,27 @@ def get_species_by_location(location):
     Species("Chain Pickerel", "A slender predator with sharp teeth, resembling a smaller pike.", "silver", 0.5, 24, 6, 0.8, 0.3),
     Species("Airbreathing Catfish", "A fish that can gulp air, allowing it to thrive in low-oxygen waters.", "diamond", 0.3, 36, 8, 1.5, 0.5)
         ],
+        "Deep Blue Sea": [
+    Species("Mackerel", "A fast-swimming fish found in schools.", "bronze", 0.25, 14, 3, 0.2, 1.5),
+    Species("Sardine", "A small, silvery fish often caught in large numbers.", "bronze", 0.3, 6, 1.5, 0.1, 0.5),
+    Species("Triggerfish", "A reef-dwelling fish with strong jaws.", "bronze", 0.2, 12, 2.5, 0.3, 1.2),
+    Species("Grunt Fish", "Named for the grunting sounds they make.", "bronze", 0.25, 10, 2, 0.25, 1),
+    Species("Bonito", "A torpedo-shaped fish related to tuna.", "bronze", 0.15, 20, 4, 0.5, 2),
+    Species("Hogfish", "A reef fish known for its pig-like snout.", "silver", 0.1, 18, 3.5, 0.6, 2.5),
+    Species("Lookdown Fish", "A shiny, disk-shaped fish with a reflective body.", "silver", 0.1, 16, 3, 0.4, 2),
+    Species("Spotted Drum", "A striking black-and-white fish with a long dorsal fin.", "silver", 0.08, 14, 3, 0.35, 1.8),
+    Species("Blacktip Shark", "A sleek shark species common in shallow waters.", "silver", 0.07, 50, 6, 2.5, 5),
+    Species("Yellowtail Snapper", "A colorful snapper with a bright yellow stripe.", "silver", 0.08, 24, 5, 1.2, 3),
+    Species("Barracuda", "A fierce predator with razor-sharp teeth.", "gold", 0.05, 36, 6, 2, 4.5),
+    Species("Queen Angelfish", "A vibrant reef fish with electric blue and yellow colors.", "gold", 0.06, 18, 4, 0.8, 2.8),
+    Species("Cobia", "A powerful fish known for its shark-like appearance.", "gold", 0.04, 40, 7, 2.8, 6),
+    Species("Tarpon", "A large, silver fish famous for its leaps.", "gold", 0.03, 60, 8, 3, 7),
+    Species("Mahi-Mahi", "A dazzling blue-green fish prized for its speed and taste.", "gold", 0.02, 48, 7, 2.2, 5.5),
+    Species("Sailfish", "One of the fastest fish in the ocean, with a massive sail-like fin.", "platinum", 0.015, 70, 9, 3.5, 8),
+    Species("Bluefin Tuna", "A highly prized deep-sea fish known for its strength.", "platinum", 0.01, 96, 10, 4, 10),
+    Species("Goliath Grouper", "A massive reef fish capable of reaching enormous sizes.", "platinum", 0.008, 84, 12, 4.5, 12),
+    Species("Oarfish", "A mysterious deep-sea fish with a long, ribbon-like body.", "diamond", 0.005, 200, 20, 6, 15)
+        ],
         "Twilight Fjord": [
     Species("Lunar Tetra", "A small, shimmering fish with a bioluminescent glow, illuminating the darkest waters.", "gold", 0.2, 12, 4, 0.3, 0.1),
     Species("Ghostly Trout", "A semi-transparent trout that glows faintly in moonlight, adding to its mysterious allure.", "platinum", 0.3, 24, 6, 0.8, 0.4),
@@ -196,7 +236,7 @@ class GameApp:
         # Root tkinter stuff
         self.root = root
         self.root.title("Fishtown")
-        # self.root.geometry("1000x600")  # Set the window size - removed because the auto-sizing has been nicer so far.
+        self.root.geometry("1000x563")  # Set the window size - removed because the auto-sizing has been nicer so far.
 
         # game icon
         root.iconbitmap("images/icon.ico") 
@@ -204,11 +244,19 @@ class GameApp:
         # Bind the window close (X button) to a custom method
         self.root.protocol("WM_DELETE_WINDOW", self.on_close)
 
+        # Background image
+        self.bg_image = tk.PhotoImage(file = "images/bg_1000_563.gif")
+        #self.bg_image = self.bg_image.subsample(2,2)
+        self.bg_label = tk.Label(self.root, image=self.bg_image)
+        self.bg_label.place(relwidth=1,relheight=1) # stretch to fill window
+
         # Placeholder for player instance (initially None)
         self.player = None
 
         # Label for Welcome Message
-        self.welcome_label = tk.Label(self.root, text="Welcome to Fishtown!", font=("Arial", 24))
+        self.welcome_label = tk.Label(self.root, text="🎣 Welcome to FishTown! 🐟",
+                                    font=("Times New Roman", 30, "bold"),
+                                    fg="dodger blue")
         self.welcome_label.pack(side="top", pady=10)
 
         # Label for username prompt
@@ -220,15 +268,32 @@ class GameApp:
         self.username_entry.pack(side="top", pady=10)
 
         # Game Options - initially hidden
-        self.main_menu_label = tk.Label(self.root, text = "Welcome to Fishtown!", font=("Arial", 20))
+        self.main_menu_label = tk.Label(self.root, text="🎣 Welcome to FishTown! 🐟",
+                                    font=("Times New Roman", 30, "bold"),
+                                    fg="dodger blue")
+        # Go fish image and button
+        self.go_fish_image = tk.PhotoImage(file = "images/go_fish.gif")
         self.go_fishing_button = tk.Button(self.root, 
-                                   text="Go Fishing", 
+                                   text="Go Fishing",
+                                   image=self.go_fish_image,
+                                   compound='top', 
+                                   bg=self.root['bg'], # respect background color of tkinter window
                                    command=lambda: self.go_fishing(self.species_list, self.player)) # lambda means this function isn't called immediately.
-        self.shop_button = tk.Button(self.root, text="Shop", command=self.go_shopping)
-        self.encyclopedia_button = tk.Button(self.root, text="Encyclopedia", command=self.view_encyclopedia)
-        self.locations_button = tk.Button(self.root, text="Locations", command=self.view_locations)
-        self.gear_button = tk.Button(self.root, text="Gear", command=self.view_gear)
-        self.quit_button = tk.Button(self.root, text="Quit", command=self.quit_game)
+        # Shop image and button
+        self.shop_image = tk.PhotoImage(file = "images/shop.gif")
+        self.shop_button = tk.Button(self.root, text="Shop", image=self.shop_image, compound="top", command=self.go_shopping)
+        # Encyclopedia image and button
+        self.encyclopedia_image = tk.PhotoImage(file = "images/encyclopedia.gif")
+        self.encyclopedia_button = tk.Button(self.root, text="Encyclopedia", image=self.encyclopedia_image, compound="top", command=self.view_encyclopedia)
+        # Location image and button
+        self.location_image = tk.PhotoImage(file = "images/location.gif")
+        self.locations_button = tk.Button(self.root, text="Locations", image=self.location_image, compound="top", command=self.view_locations)
+        # Gear image and button
+        self.gear_image = tk.PhotoImage(file = "images/gear.gif")
+        self.gear_button = tk.Button(self.root, text="Gear", image=self.gear_image, compound="top", command=self.view_gear)
+        # Quit image and button
+        self.quit_image = tk.PhotoImage(file = "images/quit2.gif")
+        self.quit_button = tk.Button(self.root, text="Quit", image=self.quit_image, compound="top", command=self.quit_game)
 
         # Button to start the game (after entering the username)
         self.start_button = tk.Button(self.root, text="Start Game", command=self.start_game)
@@ -249,14 +314,18 @@ class GameApp:
 
         # Encyclopedia page buttons and options
         self.caught_species_button = tk.Button(self.root, text="View Caught Species", command=self.caught_species)
-        self.caught_species_textbox = tk.Text(self.root, height=10, width=50, font=("Arial",10))
+        self.caught_species_textbox = tk.Text(self.root, height=40, width=50, font=("Arial",10))
 
         # Caught Species Page options
         self.back_to_encyclopedia_button = tk.Button(self.root, text="Back to Encyclopedia", command=self.view_encyclopedia)
 
-        # Inventory buttons - initially hidden
-        self.inventory_label = tk.Label(self.root, text="Inventory", font=("Arial", 14))
-        self.inventory_listbox = tk.Listbox(self.root, height=16, width=30, font=("Arial", 10))
+        # Inventory image and buttons - initially hidden
+        self.inventory_image = tk.PhotoImage(file = "images/inventory.gif")
+        self.inventory_label = tk.Label(self.root, text="Inventory", image=self.inventory_image, compound="top", font=("Times New Roman", 14))
+        self.inventory_listbox = tk.Listbox(self.root, height=16, width=30, font=("Times New Roman", 10))
+
+        # Location placeholder
+        self.current_location_label = False
 
         # Player Gold Image - initially hidden
         self.gold_image = tk.PhotoImage(file = "images/gold32x32.png")
@@ -310,7 +379,7 @@ class GameApp:
 
         # Inventory widgets
         self.inventory_label.pack(side="top", pady=10)
-        self.inventory_listbox.pack(side="top", pady=10)
+        self.inventory_listbox.pack(side="top", pady=5)
         self.update_inventory()
 
         # Player gold display
@@ -333,6 +402,8 @@ class GameApp:
         self.sell_all_fish_button.pack_forget()
         self.caught_species_button.pack_forget()
         self.caught_species_textbox.pack_forget()
+        if self.current_location_label:
+            self.current_location_label.pack_forget()
         # including location unlocks
         if self.location_buttons != []:
             for location_button in self.location_buttons:
@@ -370,10 +441,16 @@ class GameApp:
         self.gear_button.pack_forget()
         self.quit_button.pack_forget()
 
+        # Create and show current location button
+        self.current_location_label = tk.Label(self.root, text=f"{self.current_location.name}\nSwitch Locations in Locations Tab", font=("Arial, 10"))
+        self.current_location_label.pack(side="left", padx=10)
+
         # Show the fishing options on the page
         self.catch_fish_button.pack(side="left", padx=10)
         self.back_to_main_button.pack(side="left", padx=10)
         self.textbox.pack(side=tk.BOTTOM, fill=tk.X)
+
+        
 
         '''# Create a scrollbar widget
         scrollbar = tk.Scrollbar(self.root, command=self.textbox.yview)
@@ -486,13 +563,16 @@ class GameApp:
         self.back_to_main_button.pack_forget()
 
         # Display the textbox
-        self.caught_species_textbox.pack()
+        self.caught_species_textbox.pack(side="right", padx=10)
         self.caught_species_textbox.delete(1.0,tk.END) # clear any previous content
+        self.caught_species_textbox.tag_configure("uncaught", foreground="red")
+        self.caught_species_textbox.tag_configure("caught", foreground="green")
         for species, value in self.player.caught_species.items():
-            self.caught_species_textbox.insert(tk.END, f"{species}: {value}\n")
+            tag = "caught" if value == True else "uncaught"
+            self.caught_species_textbox.insert(tk.END, f"{species}: {value}\n", tag)
 
         # Display back to encyclopedia button
-        self.back_to_encyclopedia_button.pack()
+        self.back_to_encyclopedia_button.pack(side="left", padx=10)
 
     def view_locations(self):
         '''location options'''
@@ -513,6 +593,9 @@ class GameApp:
         # Set up buttons to show on this page
         self.back_to_main_button.pack(side="left", padx=10)
 
+        # make sure location label is set up
+        self.current_location_label = tk.Label(self.root, text=f"{self.current_location.name}\nSwitch Locations in Locations Tab", font=("Arial, 10"))
+
         # Location buttons
         self.location_buttons = []
         for location in self.locations_list:
@@ -528,6 +611,7 @@ class GameApp:
         if location.unlocked:
             self.current_location = location
             messagebox.showinfo("Location changed", f"You moved to {location.name}!")
+            self.current_location_label.config(text=f"{self.current_location.name}\nSwitch Locations in Locations Tab")
 
         else: 
             # unlock location if enough gold
@@ -555,7 +639,6 @@ class GameApp:
         print("You chose to view gear!")
 
     def quit_game(self):
-        print("Quitting the game...")
         self.player.pickle_dump_data()
         self.root.quit()  # Close the window
     
