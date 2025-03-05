@@ -53,6 +53,7 @@ class Fish:
         self.colouration = self.determine_colouration()
         self.condition = self.determine_condition()
         self.grade = self.determine_overall_grade()
+        self.sell_price = self.determine_sell_price()
 
     def __str__(self):
         '''String representation of the caught fish'''
@@ -240,5 +241,51 @@ class Fish:
             grade = "Copper"
 
         return grade
+    
+    def determine_sell_price(self):
+        '''determines the sell price of a fish, based on the species rarity and overall grade'''
+
+        # find base price based on species rarity
+        rarity = self.species.rarity
+        if rarity == "bronze":
+            base_price = 1
+        elif rarity == "silver":
+            base_price = 2
+        elif rarity == "gold":
+            base_price = 4
+        elif rarity == "platinum":
+            base_price = 16
+        elif rarity == "diamond":
+            base_price = 64
+
+        # adjust base price based on grade, using floor division where applicable
+        if self.grade == "Perfect":
+            sell_price = base_price * 8
+        elif self.grade == "Diamond":
+            sell_price = base_price * 4
+        elif self.grade == "Platinum":
+            sell_price = base_price * 2
+        elif self.grade == "Gold":
+            sell_price = base_price * 1.5
+        elif self.grade == "Silver":
+            sell_price = base_price
+        elif self.grade == "Bronze":
+            sell_price = base_price
+        elif self.grade == "Copper":
+            sell_price = base_price // 2
+        elif self.grade == "Rotten":
+            sell_price = 0
+
+        # ensure convert to int
+        sell_price = int(sell_price)
+
+        # handle any negative pricing
+        if sell_price < 0:
+            sell_price = 0
+
+        return sell_price
+
+        
+
 
 

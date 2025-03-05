@@ -95,6 +95,10 @@ class GameApp:
         self.inventory_label = tk.Label(self.root, text="Inventory", font=("Arial", 14))
         self.inventory_listbox = tk.Listbox(self.root, height=16, width=30, font=("Arial", 10))
 
+        # Player Gold Image - initially hidden
+        self.gold_image = tk.PhotoImage(file = "images/gold32x32.png")
+        
+
     def start_game(self):
 
         # Get username data 
@@ -137,6 +141,10 @@ class GameApp:
         self.inventory_label.pack(side="top", pady=10)
         self.inventory_listbox.pack(side="top", pady=10)
         self.update_inventory()
+
+        # Player gold display
+        self.gold_label = tk.Label(self.root, text=f"{self.player.gold}", font=("Arial", 10), image=self.gold_image, compound='top')
+        self.gold_label.pack(side="right", padx=10)
 
     def show_main_menu(self):
         '''show main menu. Often used in the return to main menu buttons.'''
@@ -239,23 +247,32 @@ class GameApp:
         selected_index = selected_index[0] # curselection uses a tuple, so this extracts from that tuple
         sold_fish = self.player.inventory.pop(selected_index)
 
+        # add gold for selling the fish
+        self.player.gold += sold_fish.sell_price
+        # update gold label
+        self.gold_label.config(text=f"{self.player.gold}")
+
         # Update inventory display
         self.update_inventory()
 
         # Show message confirming sale
-        tk.messagebox.showinfo("Fish Sold", f"You sold a {sold_fish.grade} {sold_fish.species.name}.")
+        tk.messagebox.showinfo("Fish Sold", f"You sold a {sold_fish.grade} {sold_fish.species.name} for {sold_fish.sell_price} gold.")
 
     def sell_all(self):
         '''sell all fish in inventory'''
 
+        total_value = 0
         for fish in self.player.inventory[:]: # slice is needed so that we don't skip fish to sell. 
-                    # total_value += fish.value
-                    self.player.inventory.remove(fish)
-                    # self.player.gold += total_value
+            total_value += fish.sell_price
+            self.player.inventory.remove(fish)
+        self.player.gold += total_value
 
         # Show message confirming sale
-        tk.messagebox.showinfo("Fish Sold", "You have sold all of the fish in your inventory for XXX gold.")
+        tk.messagebox.showinfo("Fish Sold", f"You have sold all of the fish in your inventory for {total_value} gold.")
 
+        # update gold label
+        self.gold_label.config(text=f"{self.player.gold}")
+        
         # Update the inventory at the end            
         self.update_inventory()
 

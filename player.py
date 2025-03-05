@@ -20,6 +20,9 @@ class Player:
         # Initialize inventory. Maxes at size 16. 
         self.inventory = self.initialize_inventory()
 
+        #initialize currency
+        self.gold = self.initialize_gold()
+
     def initialize_caught_species(self):
         '''initialize the caught species list'''
         self.caught_species = {}
@@ -98,6 +101,30 @@ class Player:
                     self.inventory.append(fish)
 
         return self.inventory
+    
+    def initialize_gold(self):
+        '''initialize the player's gold, loading from a previous save if applicable'''
+        self.gold = 0
+
+        # Reading the pickle file to update caught species list. 
+        filepath = f'./player_data/.{self.username}/.{self.username}.gold.pickle'
+
+        # Ensure the subdirectory exists * note, probably redundant because the initialize_caught_species function always runs this first, so can probably delete. 
+        os.makedirs(f'./player_data/.{self.username}', exist_ok=True)
+
+        # Write file
+        if not os.path.exists(filepath):
+            with open(filepath, 'wb') as file:
+                pickle.dump(self.gold,file)
+        with open(f'./player_data/.{self.username}/.{self.username}.gold.pickle', 'rb') as file:
+            try:
+                pickle_data = pickle.load(file)
+            except:
+                return
+            else:
+                self.gold = pickle_data
+
+        return self.gold
 
 
     def pickle_dump_data(self):
@@ -108,5 +135,7 @@ class Player:
             pickle.dump(self.caught_fish,file)
         with open(f'./player_data/.{self.username}/.{self.username}.inventory.pickle', 'wb') as file:
             pickle.dump(self.inventory,file)
+        with open(f'./player_data/.{self.username}/.{self.username}.gold.pickle', 'wb') as file:
+            pickle.dump(self.gold,file)
 
 
