@@ -302,7 +302,7 @@ class GameApp:
         # Fishing page options
         self.catch_fish_button = tk.Button(self.root, 
                                    text="Catch Fish!", 
-                                   command=lambda: self.catch_fish(self.species_list,self.player)) # lambda means this function isn't called immediately.
+                                   command=lambda: self.fishing_minigame()) # lambda means this function isn't called immediately.
         self.back_to_main_button = tk.Button(self.root,text="Main Menu", command=self.show_main_menu)
 
         # Create a Text widget for logging actions
@@ -360,7 +360,7 @@ class GameApp:
         self.location_buttons = []
 
         # # update catch fish button to respect the current location
-        self.catch_fish_button.config(command=lambda: self.catch_fish(get_species_by_location(self.current_location), self.player))
+        # self.catch_fish_button.config(command=lambda: self.catch_fish(get_species_by_location(self.current_location), self.player))
 
         # Hide username prompt and start button
         self.username_label.pack_forget()
@@ -435,7 +435,7 @@ class GameApp:
         self.level_label.pack(side = "right", padx = 10)
 
         # update catch fish button to respect the current location
-        self.catch_fish_button.config(command=lambda: self.catch_fish(get_species_by_location(self.current_location), self.player))
+        # self.catch_fish_button.config(command=lambda: self.catch_fish(get_species_by_location(self.current_location), self.player))
     
     def go_fishing(self,species_list,player):
         '''fishing loop'''
@@ -470,24 +470,79 @@ class GameApp:
         weights = [species.rarity_weight for species in species_list]
         fish_species = random.choices(species_list, weights=weights, k=1)[0]
         if len(player.inventory) < 16:
-            fish = Fish(fish_species)
-            self.update_textbox(f"You caught a {fish}.", color='black')
-            player.caught_species[fish_species.name] = True
-            player.caught_fish.append(fish)
-            player.inventory.append(fish)
-            self.update_inventory()
-            # update player xp and check level
-            prev_level = self.player.get_level(self.player.xp)
-            self.player.xp += fish.xp
-            self.player.level = self.player.get_level(self.player.xp)
-            self.player.remaining_xp = self.player.get_xp_to_next_level(self.player.xp)
-            self.level_label.config(text = f"Level: {self.player.level}\nXP: {self.player.xp}\nXP to Next Level: {self.player.remaining_xp}")
-            if self.player.level > prev_level:
-                # check if a level up just happened and print a message
-                self.update_textbox(f"Congratulations, you leveled up to level {self.player.level}!", color="green")
+            if self.minigame_result:
+                fish = Fish(fish_species)
+                self.update_textbox(f"You caught a {fish}.", color='black')
+                player.caught_species[fish_species.name] = True
+                player.caught_fish.append(fish)
+                player.inventory.append(fish)
+                self.update_inventory()
+                # update player xp and check level
+                prev_level = self.player.get_level(self.player.xp)
+                self.player.xp += fish.xp
+                self.player.level = self.player.get_level(self.player.xp)
+                self.player.remaining_xp = self.player.get_xp_to_next_level(self.player.xp)
+                self.level_label.config(text = f"Level: {self.player.level}\nXP: {self.player.xp}\nXP to Next Level: {self.player.remaining_xp}")
+                if self.player.level > prev_level:
+                    # check if a level up just happened and print a message
+                    self.update_textbox(f"Congratulations, you leveled up to level {self.player.level}!", color="green")
+            else:
+                messagebox.showinfo("Failed Catch", "You failed to catch a fish this time. Try again!")
 
         else: 
             messagebox.showinfo("Inventory full", "Your inventory is full. Sell your fish!")
+
+    def fishing_minigame(self):
+        '''fishing minigame for catching fish, using a slider'''
+
+        # set up slider
+        self.canvas = tk.Canvas(self.root, width=300, height=50, bg='lightblue')
+        self.slider = self.canvas.create_rectangle(20, 15, 80, 35, fill="red")
+        self.target_zone = self.canvas.create_rectangle(125, 15, 175, 35, outline="green", width=5)
+
+        # slider movement
+        self.slider_pos = 20
+        self.direction = 5
+        self.running = True
+
+        # catch button and label
+        self.catch_button = tk.Button(self.root, text="Stop!", font=("Times New Roman", 12), command=self.attempt_catch)
+        self.catch_label = tk.Label(self.root, text="Press when the slider is in the green zone!", font=("Times New Roman", 12))
+        self.catch_button.pack(pady=10)
+        self.catch_label.pack(pady=10)
+        # pack the canvas
+        self.canvas.pack(pady=10) 
+
+        def move_slider():
+            '''continuously move the slider'''
+            if not self.running:
+                return # if minigame ended
+            
+            self.slider_pos += self.direction
+            if self.slider_pos >= 220 or self.slider_pos <= 20:
+                self.direction *= -1 # reverse
+            self.canvas.coords(self.slider, self.slider_pos, 15, self.slider_pos + 60, 35)
+            self.root.after(50, move_slider)
+
+        # start moving the slider
+        move_slider()
+
+
+    def attempt_catch(self):
+        '''attempt a catch'''
+
+        self.running = False
+        slider_center = self.slider_pos + 30
+        distance_from_center = abs(slider_center - 150)
+        if distance_from_center <= 30:
+            self.minigame_result = True
+        self.catch_label.config(text="Success!" if self.minigame_result else "Missed!")
+        self.canvas.pack_forget()
+        self.catch_button.pack_forget()
+        self.catch_label.pack_forget()
+
+        if self.minigame_result == True:
+            self.catch_fish(get_species_by_location(self.current_location), self.player)
 
     def go_shopping(self):
         '''shopping loop'''
