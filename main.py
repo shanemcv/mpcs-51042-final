@@ -508,8 +508,8 @@ class GameApp:
 
         # set up slider
         self.canvas = tk.Canvas(self.minigame_window, width=300, height=50, bg='lightblue')
-        self.slider = self.canvas.create_rectangle(20, 15, 80, 35, fill="red")
-        self.target_zone = self.canvas.create_rectangle(125, 15, 175, 35, outline="green", width=5)
+        self.slider = self.canvas.create_rectangle(20, 15, 30, 35, fill="dodger blue")
+        self.target_zone = self.canvas.create_rectangle(140, 15, 160, 35, outline="green", width=3)
 
         # slider movement
         self.slider_pos = 20
@@ -532,8 +532,8 @@ class GameApp:
             self.slider_pos += self.direction
             if self.slider_pos >= 220 or self.slider_pos <= 20:
                 self.direction *= -1 # reverse
-            self.canvas.coords(self.slider, self.slider_pos, 15, self.slider_pos + 60, 35)
-            self.root.after(50, move_slider)
+            self.canvas.coords(self.slider, self.slider_pos, 15, self.slider_pos + 10, 35)
+            self.root.after(15, move_slider)
 
         # start moving the slider
         move_slider()
@@ -543,10 +543,10 @@ class GameApp:
         '''attempt a catch'''
 
         self.running = False
-        slider_center = self.slider_pos + 30
+        slider_center = self.slider_pos + 2.5
         distance_from_center = abs(slider_center - 150)
         self.minigame_result = False
-        if distance_from_center <= 30:
+        if distance_from_center <= 10:
             self.minigame_result = True
         self.catch_label.config(text="Success!" if self.minigame_result else "Missed!")
         self.minigame_window.after(1000, self.close_minigame_window)
