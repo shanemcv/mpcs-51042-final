@@ -4,6 +4,7 @@
 from fish import Species, Fish
 import pickle
 import os
+import math
 
 class Player:
     '''a player of the game'''
@@ -25,6 +26,11 @@ class Player:
 
         # initialize unlocked locations
         self.unlocked_locations = self.initialize_locations()
+
+        # initialize experience and level
+        self.xp = self.initialize_xp()
+        self.level = self.get_level(self.xp)
+        self.remaining_xp = self.get_xp_to_next_level(self.xp)
 
     def initialize_caught_species(self):
         '''initialize the caught species list'''
@@ -153,6 +159,53 @@ class Player:
                     self.unlocked_locations.add(location)
 
         return self.unlocked_locations
+    
+    def initialize_xp(self):
+        '''initialize the player's experience, loading from a previous save if applicable'''
+        self.xp = 0
+
+        # Reading the pickle file to update caught species list. 
+        filepath = f'./player_data/.{self.username}/.{self.username}.xp.pickle'
+
+        # Ensure the subdirectory exists * note, probably redundant because the initialize_caught_species function always runs this first, so can probably delete. 
+        os.makedirs(f'./player_data/.{self.username}', exist_ok=True)
+
+        # Write file
+        if not os.path.exists(filepath):
+            with open(filepath, 'wb') as file:
+                pickle.dump(self.xp,file)
+        with open(f'./player_data/.{self.username}/.{self.username}.xp.pickle', 'rb') as file:
+            try:
+                pickle_data = pickle.load(file)
+            except:
+                return
+            else:
+                self.xp = pickle_data
+
+        return self.xp
+    
+    def get_level(self, xp):
+        '''initializes player level based on experience'''
+
+        # exponential leveling formula
+        level = 1 + (math.log((xp + 999) / 1337) / math.log(1.1))
+        level = max(1, int(level))
+        if level > 99:
+            level = 99
+        return level
+    
+    def get_xp_to_next_level(self, xp):
+        '''initializes player level based on experience'''
+
+        current_level = self.get_level(xp)
+        xp_for_next = 1337 * (1.1 ** current_level) - 999
+        if xp_for_next % 1 == 0:
+            xp_for_next = int(xp_for_next + 1)
+        else:
+            xp_for_next = int(xp_for_next)
+        
+        remaining_xp = xp_for_next - xp
+        return remaining_xp
 
     def pickle_dump_data(self):
         '''pickles all player information into files'''
@@ -166,5 +219,8 @@ class Player:
             pickle.dump(self.gold,file)
         with open(f'./player_data/.{self.username}/.{self.username}.locations.pickle', 'wb') as file:
             pickle.dump(self.unlocked_locations,file)
+        with open(f'./player_data/.{self.username}/.{self.username}.xp.pickle', 'wb') as file:
+            pickle.dump(self.xp,file)
+        
 
 

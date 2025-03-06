@@ -236,7 +236,7 @@ class GameApp:
         # Root tkinter stuff
         self.root = root
         self.root.title("Fishtown")
-        self.root.geometry("1000x563")  # Set the window size - removed because the auto-sizing has been nicer so far.
+        self.root.geometry("1306x735")  # Set the window size 
 
         # game icon
         root.iconbitmap("images/icon.ico") 
@@ -245,7 +245,7 @@ class GameApp:
         self.root.protocol("WM_DELETE_WINDOW", self.on_close)
 
         # Background image
-        self.bg_image = tk.PhotoImage(file = "images/bg_1000_563.gif")
+        self.bg_image = tk.PhotoImage(file = "images/bg_1306_735.gif")
         #self.bg_image = self.bg_image.subsample(2,2)
         self.bg_label = tk.Label(self.root, image=self.bg_image)
         self.bg_label.place(relwidth=1,relheight=1) # stretch to fill window
@@ -383,8 +383,13 @@ class GameApp:
         self.update_inventory()
 
         # Player gold display
-        self.gold_label = tk.Label(self.root, text=f"{self.player.gold}", font=("Arial", 10), image=self.gold_image, compound='top')
+        self.gold_label = tk.Label(self.root, text=f"{self.player.gold}", font=("Times New Roman", 10), image=self.gold_image, compound='top')
         self.gold_label.pack(side="right", padx=10)
+
+        # Player Level display
+        self.level_image = tk.PhotoImage(file = "images/level.gif")
+        self.level_label = tk.Label(self.root, text = f"Level: {self.player.level}\nXP: {self.player.xp}\nXP to Next Level: {self.player.remaining_xp}", font=("Times New Roman", 10), image=self.level_image, compound='top')
+        self.level_label.pack(side="right", padx=10)
 
     def show_main_menu(self):
         '''show main menu. Often used in the return to main menu buttons.'''
@@ -426,6 +431,9 @@ class GameApp:
         # Player gold display
         self.gold_label.pack(side="right", padx=10)
 
+        # Player Level Display
+        self.level_label.pack(side = "right", padx = 10)
+
         # update catch fish button to respect the current location
         self.catch_fish_button.config(command=lambda: self.catch_fish(get_species_by_location(self.current_location), self.player))
     
@@ -450,8 +458,6 @@ class GameApp:
         self.back_to_main_button.pack(side="left", padx=10)
         self.textbox.pack(side=tk.BOTTOM, fill=tk.X)
 
-        
-
         '''# Create a scrollbar widget
         scrollbar = tk.Scrollbar(self.root, command=self.textbox.yview)
         scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
@@ -465,11 +471,21 @@ class GameApp:
         fish_species = random.choices(species_list, weights=weights, k=1)[0]
         if len(player.inventory) < 16:
             fish = Fish(fish_species)
-            self.update_textbox(f"You have caught a {fish}.")
+            self.update_textbox(f"You caught a {fish}.", color='black')
             player.caught_species[fish_species.name] = True
             player.caught_fish.append(fish)
             player.inventory.append(fish)
             self.update_inventory()
+            # update player xp and check level
+            prev_level = self.player.get_level(self.player.xp)
+            self.player.xp += fish.xp
+            self.player.level = self.player.get_level(self.player.xp)
+            self.player.remaining_xp = self.player.get_xp_to_next_level(self.player.xp)
+            self.level_label.config(text = f"Level: {self.player.level}\nXP: {self.player.xp}\nXP to Next Level: {self.player.remaining_xp}")
+            if self.player.level > prev_level:
+                # check if a level up just happened and print a message
+                self.update_textbox(f"Congratulations, you leveled up to level {self.player.level}!", color="green")
+
         else: 
             messagebox.showinfo("Inventory full", "Your inventory is full. Sell your fish!")
 
@@ -550,6 +566,7 @@ class GameApp:
         self.back_to_encyclopedia_button.pack_forget()
         self.caught_species_textbox.pack_forget()
         self.gold_label.pack_forget()
+        self.level_label.pack_forget()
 
         # Set up buttons on main encylopedia page
         self.caught_species_button.pack(side="left", padx=10)
@@ -664,11 +681,17 @@ class GameApp:
             elif fish.species.rarity == "copper":
                 self.inventory_listbox.itemconfig(tk.END, {'fg': 'seashell'})
 
-    def update_textbox(self, message):
+    def update_textbox(self, message, color='black'):
         # Enable the Text widget, insert the message, and disable it again
         self.textbox.config(state=tk.NORMAL)  # Enable the Text widget for editing
+        # get insert position for colored messages
+        insert_position = self.textbox.index(tk.INSERT)
         self.textbox.insert(tk.END, message + "\n")  # Insert the new message at the end
+        end_position = self.textbox.index(f"{insert_position} + {len(message) + 1}c")
         self.textbox.see(tk.END)  # Automatically scroll to the bottom
+        # change color of inserted text
+        self.textbox.tag_add("colored", insert_position, end_position)
+        self.textbox.tag_config("colored", foreground=color)
         self.textbox.config(state=tk.DISABLED)  # Disable it again so the user cannot edit it
 
 def main():

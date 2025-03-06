@@ -54,6 +54,7 @@ class Fish:
         self.condition = self.determine_condition()
         self.grade = self.determine_overall_grade()
         self.sell_price = self.determine_sell_price()
+        self.xp = self.determine_xp()
 
     def __str__(self):
         '''String representation of the caught fish'''
@@ -284,6 +285,23 @@ class Fish:
             sell_price = 0
 
         return sell_price
+    
+    def determine_xp(self):
+        '''determines xp for catching a fish based on species rarity'''
+        # find base xp based on species rarity
+        rarity = self.species.rarity
+        if rarity == "bronze":
+            xp = 10
+        elif rarity == "silver":
+            xp = 20
+        elif rarity == "gold":
+            xp = 40
+        elif rarity == "platinum":
+            xp = 80
+        elif rarity == "diamond":
+            xp = 160
+
+        return xp
 
         
 
