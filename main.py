@@ -495,8 +495,19 @@ class GameApp:
     def fishing_minigame(self):
         '''fishing minigame for catching fish, using a slider'''
 
+        # remove for duration of minigame
+        self.current_location_label.pack_forget()
+        self.catch_fish_button.pack_forget()
+        self.back_to_main_button.pack_forget()
+        self.textbox.pack_forget()
+
+        # new window for fishing minigame
+        self.minigame_window = tk.Toplevel(self.root)
+        self.minigame_window.title("Fishing!")
+        self.minigame_window.iconbitmap("images/icon.ico") 
+
         # set up slider
-        self.canvas = tk.Canvas(self.root, width=300, height=50, bg='lightblue')
+        self.canvas = tk.Canvas(self.minigame_window, width=300, height=50, bg='lightblue')
         self.slider = self.canvas.create_rectangle(20, 15, 80, 35, fill="red")
         self.target_zone = self.canvas.create_rectangle(125, 15, 175, 35, outline="green", width=5)
 
@@ -506,8 +517,8 @@ class GameApp:
         self.running = True
 
         # catch button and label
-        self.catch_button = tk.Button(self.root, text="Stop!", font=("Times New Roman", 12), command=self.attempt_catch)
-        self.catch_label = tk.Label(self.root, text="Press when the slider is in the green zone!", font=("Times New Roman", 12))
+        self.catch_button = tk.Button(self.minigame_window, text="Stop!", font=("Times New Roman", 12), command=self.attempt_catch)
+        self.catch_label = tk.Label(self.minigame_window, text="Press when the slider is in the green zone!", font=("Times New Roman", 12))
         self.catch_button.pack(pady=10)
         self.catch_label.pack(pady=10)
         # pack the canvas
@@ -534,12 +545,27 @@ class GameApp:
         self.running = False
         slider_center = self.slider_pos + 30
         distance_from_center = abs(slider_center - 150)
+        self.minigame_result = False
         if distance_from_center <= 30:
             self.minigame_result = True
         self.catch_label.config(text="Success!" if self.minigame_result else "Missed!")
+        self.minigame_window.after(1000, self.close_minigame_window)
+
+    def close_minigame_window(self):
+        '''closes the minigame window'''
         self.canvas.pack_forget()
         self.catch_button.pack_forget()
         self.catch_label.pack_forget()
+        
+
+        # close minigame window
+        self.minigame_window.destroy()
+
+        # re-pack the catch fish button
+        self.current_location_label.pack(side="left", padx=10)
+        self.catch_fish_button.pack(side="left", padx=10)
+        self.back_to_main_button.pack(side="left", padx=10)
+        self.textbox.pack(side=tk.BOTTOM, fill=tk.X)
 
         if self.minigame_result == True:
             self.catch_fish(get_species_by_location(self.current_location), self.player)
