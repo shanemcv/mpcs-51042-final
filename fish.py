@@ -249,15 +249,15 @@ class Fish:
         # find base price based on species rarity
         rarity = self.species.rarity
         if rarity == "bronze":
-            base_price = 1
-        elif rarity == "silver":
             base_price = 2
-        elif rarity == "gold":
+        elif rarity == "silver":
             base_price = 4
+        elif rarity == "gold":
+            base_price = 8
         elif rarity == "platinum":
-            base_price = 16
+            base_price = 32
         elif rarity == "diamond":
-            base_price = 64
+            base_price = 128
 
         # adjust base price based on grade, using floor division where applicable
         if self.grade == "⭐⭐⭐⭐⭐⭐":

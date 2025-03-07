@@ -592,11 +592,11 @@ class GameApp:
             if rod_selection == "Basic Fishing Rod":
                 speed = base_speed
             elif rod_selection == "Bronze Fishing Rod":
-                speed = base_speed * 1.2
+                speed = int(base_speed * 1.2)
             elif rod_selection == "Silver Fishing Rod":
-                speed = base_speed * 1.4
+                speed = int(base_speed * 1.4)
             elif rod_selection == "Gold Fishing Rod":
-                speed = base_speed * 2
+                speed = int(base_speed * 2)
 
             
             self.slider_pos += self.direction
