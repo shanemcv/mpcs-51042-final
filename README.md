@@ -7,6 +7,26 @@ GENERAL INFORMATION - read this first!
 
 (2) I created an executable for the game as well. You can access this executable file at ([THIS LINK](https://drive.google.com/file/d/1ppSA2mexJ1v30JTZvjciEUA4Y5pY6CZC/view?usp=sharing)). I did not include it in the github repo because it is too large. 
 
+Note on the executable file: the direct executable file may not save player information across runs of the game. In order to ensure player data is saved, create an executable file on your local repository by following the instructions in convert.txt, copied below: 
+
+To create the executable file, use the following instructions:
+
+(1) Download/clone the github repo
+
+(2) Run this pyinstaller code at the terminal, updating the path to your local repository
+pyinstaller --onefile --windowed --icon=images/icon.ico --add-data "images;images" --add-data "help.txt;." --add-data "player_data;player_data" "<PATH_TO_YOUR_LOCAL_REPOSITORY>\mpcs-51042-final\main.py"
+
+For example, my command prompt was:
+
+pyinstaller --onefile --windowed --icon=images/icon.ico --add-data "images;images" --add-data "help.txt;." --add-data "player_data;player_data" "C:\Users\mcvei\Desktop\UChicago Winter 25\MPCS-51042-Python\mpcs-51042-final\main.py"
+
+(3) This will create an executable file in a dist/ directory under your local repo
+
+(4) Note - you may need to turn off Real-time protection under "Virus and threat protection settings" in Windows settings, 
+so that pyinstaller can create the executable. 
+
+(5) To trust the executable always >> go to Windows Security, Virus and Threat Protection Settings, Add Exclusion, and then add the local repository folder path, or directly the .exe file to the exclusions
+
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 Project Overview (Fishing Game - from Proposal)
