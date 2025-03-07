@@ -3,6 +3,7 @@
 
 from fish import Species, Fish
 from gear import Gear
+from achievements import Achievement
 import pickle
 import os
 import math
@@ -35,6 +36,9 @@ class Player:
 
         # initialize gear
         self.gear = self.initialize_gear()
+
+        # initialize achievements
+        self.achievements = self.initialize_achievements()
 
     def initialize_caught_species(self):
         '''initialize the caught species list'''
@@ -236,6 +240,36 @@ class Player:
         self.gear = list(set(self.gear)) # remove duplicate items
 
         return self.gear
+    
+    def initialize_achievements(self):
+        '''initialize the player's achievements, loading from a previous save if applicable'''
+        self.achievements = [
+            Achievement("Fisherman!", "Catch any fish", False),
+            Achievement("Diamond in the Rough", "Catch any diamond-rarity fish", False),
+            Achievement("Traveller", "Unlock any new Location", False),
+            Achievement("Perfect Catch", "Catch a Perfect Grade (6-Star) fish", False),
+            Achievement("Moneybags", "Have a gold stack exceeding 10,000 coins", False) 
+        ]
+        
+        # Reading the pickle file to update achievements list. 
+        filepath = f'./player_data/.{self.username}/.{self.username}.achievements.pickle'
+
+        # Ensure the subdirectory exists * note, probably redundant because the initialize_caught_species function always runs this first, so can probably delete. 
+        os.makedirs(f'./player_data/.{self.username}', exist_ok=True)
+
+        # Write file
+        if not os.path.exists(filepath):
+            with open(filepath, 'wb') as file:
+                pickle.dump(self.achievements,file)
+        with open(f'./player_data/.{self.username}/.{self.username}.achievements.pickle', 'rb') as file:
+            try:
+                pickle_data = pickle.load(file)
+            except:
+                return
+            else:
+                self.achievements = pickle_data
+
+        return self.achievements
 
     def pickle_dump_data(self):
         '''pickles all player information into files'''
@@ -253,6 +287,8 @@ class Player:
             pickle.dump(self.xp,file)
         with open(f'./player_data/.{self.username}/.{self.username}.gear.pickle', 'wb') as file:
             pickle.dump(self.gear,file)
+        with open(f'./player_data/.{self.username}/.{self.username}.achievements.pickle', 'wb') as file:
+            pickle.dump(self.achievements,file)
         
 
 

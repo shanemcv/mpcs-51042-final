@@ -8,6 +8,7 @@ import tkinter as tk
 from tkinter import messagebox
 from locations import Location
 from gear import Gear
+from achievements import Achievement
 
 def get_species():
     '''create the species list'''
@@ -307,6 +308,9 @@ class GameApp:
         # Gear image and button
         self.gear_image = tk.PhotoImage(file = "images/gear.gif")
         self.gear_button = tk.Button(self.root, text="Gear", image=self.gear_image, compound="top", command=self.view_gear)
+        # Achievements image and button
+        self.achievements_image = tk.PhotoImage(file = "images/achievement.gif")
+        self.achievements_button = tk.Button(self.root,text="Achievements", image=self.achievements_image, compound="top", command=self.view_achievements)
         # Quit image and button
         self.quit_image = tk.PhotoImage(file = "images/quit2.gif")
         self.quit_button = tk.Button(self.root, text="Quit", image=self.quit_image, compound="top", command=self.quit_game)
@@ -355,7 +359,11 @@ class GameApp:
         # Gear Page Display
         self.gear_label = tk.Label(self.root, text="Player Gear", image=self.gear_image, compound="top", font=("Times New Roman", 10))
         self.gear_listbox = tk.Listbox(self.root, height=5, width=50, font=("Times New Roman", 10))
-        self.equip_item_button = tk.Button(self.root, text="Equip Selected Item", command=self.equip_item)  
+        self.equip_item_button = tk.Button(self.root, text="Equip Selected Item", command=self.equip_item) 
+
+        # Achievements Page Display
+        self.achievements_label = tk.Label(self.root, text="Player Achievements", image=self.achievements_image, compound="top", font=("Times New Roman", 14)) 
+        self.achievements_listbox = tk.Listbox(self.root, height=10, width=120, font=("Times New Roman", 10))
         
 
     def start_game(self):
@@ -402,6 +410,7 @@ class GameApp:
         self.encyclopedia_button.pack(side="left", padx=10)
         self.locations_button.pack(side="left", padx=10)
         self.gear_button.pack(side="left", padx=10)
+        self.achievements_button.pack(side="left", padx=10)
         self.quit_button.pack(side="left", padx=10)
 
         # Inventory widgets
@@ -443,6 +452,8 @@ class GameApp:
         if self.location_buttons != []:
             for location_button in self.location_buttons:
                 location_button.pack_forget()
+        self.achievements_label.pack_forget()
+        self.achievements_listbox.pack_forget()
 
         # Show game buttons
         self.main_menu_label.pack(side="top", pady=10)
@@ -451,6 +462,7 @@ class GameApp:
         self.encyclopedia_button.pack(side="left", padx=10)
         self.locations_button.pack(side="left", padx=10)
         self.gear_button.pack(side="left", padx=10)
+        self.achievements_button.pack(side="left", padx=10)
         self.quit_button.pack(side="left", padx=10)
 
         # Inventory widgets
@@ -487,6 +499,7 @@ class GameApp:
         self.encyclopedia_button.pack_forget()
         self.locations_button.pack_forget()
         self.gear_button.pack_forget()
+        self.achievements_button.pack_forget()
         self.quit_button.pack_forget()
 
         # Create and show current location button
@@ -529,6 +542,16 @@ class GameApp:
                 if self.player.level > prev_level:
                     # check if a level up just happened and print a message
                     self.update_textbox(f"Congratulations, you leveled up to level {self.player.level}!", color="green")
+                # check for fishing related achievements
+                self.player.achievements[0].achieved = True # update for "Fisherman!" achievement
+                if fish.species.rarity == 'diamond':
+                    if self.player.achievements[1].achieved == False:
+                        self.update_textbox(f"Congratulations, you unlocked the {self.player.achievements[1].name} achievement.", color="green")
+                    self.player.achievements[1].achieved = True # update for "Diamond in the Rough" achievement
+                if fish.grade == "⭐⭐⭐⭐⭐⭐":
+                    if self.player.achievements[3].achieved == False:
+                        self.update_textbox(f"Congratulations, you unlocked the {self.player.achievements[3].name} achievement.", color="green")
+                    self.player.achievements[3].achieved = True # update for "Perfect Catch" achievement
             else:
                 messagebox.showinfo("Failed Catch", "You failed to catch a fish this time. Try again!")
 
@@ -652,6 +675,7 @@ class GameApp:
         self.encyclopedia_button.pack_forget()
         self.locations_button.pack_forget()
         self.gear_button.pack_forget()
+        self.achievements_button.pack_forget()
         self.quit_button.pack_forget()
 
         # Show shop items
@@ -685,6 +709,9 @@ class GameApp:
 
         # add gold for selling the fish
         self.player.gold += sold_fish.sell_price
+        # check for Moneybags achievement
+        if self.player.gold >= 10000:
+            self.player.achievements[4].achieved = True
         # update gold label
         self.gold_label.config(text=f"{self.player.gold}")
 
@@ -702,6 +729,9 @@ class GameApp:
             total_value += fish.sell_price
             self.player.inventory.remove(fish)
         self.player.gold += total_value
+        # check for Moneybags achievement
+        if self.player.gold >= 10000:
+            self.player.achievements[4].achieved = True
 
         # Show message confirming sale
         tk.messagebox.showinfo("Fish Sold", f"You have sold all of the fish in your inventory for {total_value} gold.")
@@ -756,6 +786,7 @@ class GameApp:
         self.encyclopedia_button.pack_forget()
         self.locations_button.pack_forget()
         self.gear_button.pack_forget()
+        self.achievements_button.pack_forget()
         self.quit_button.pack_forget()
         self.inventory_label.pack_forget()
         self.inventory_listbox.pack_forget()
@@ -797,6 +828,7 @@ class GameApp:
         self.encyclopedia_button.pack_forget()
         self.locations_button.pack_forget()
         self.gear_button.pack_forget()
+        self.achievements_button.pack_forget()
         self.quit_button.pack_forget()
         self.inventory_label.pack_forget()
         self.inventory_listbox.pack_forget()
@@ -831,6 +863,8 @@ class GameApp:
             if self.player.gold >= location.unlock_price:
                 self.player.gold -= location.unlock_price
                 location.unlocked = True
+                # check for location achievement
+                self.player.achievements[2].achieved = True # update for "Traveller" achievement
                 self.player.unlocked_locations.add(location.name)
                 messagebox.showinfo("Location unlocked!", f"You have unlocked {location.name}!")
                 self.update_location_buttons()
@@ -858,6 +892,7 @@ class GameApp:
         self.encyclopedia_button.pack_forget()
         self.locations_button.pack_forget()
         self.gear_button.pack_forget()
+        self.achievements_button.pack_forget()
         self.quit_button.pack_forget()
         self.inventory_label.pack_forget()
         self.inventory_listbox.pack_forget()
@@ -907,7 +942,41 @@ class GameApp:
         # Show message confirming sale
         tk.messagebox.showinfo("Item Equipped", f"You equipped {self.player.gear[selected_index].name}")
 
+    def view_achievements(self):
+        '''open the player achievements window'''
+        # Hide buttons I don't want on this page
+        self.main_menu_label.pack_forget()
+        self.go_fishing_button.pack_forget()
+        self.shop_button.pack_forget()
+        self.encyclopedia_button.pack_forget()
+        self.locations_button.pack_forget()
+        self.gear_button.pack_forget()
+        self.achievements_button.pack_forget()
+        self.quit_button.pack_forget()
+        self.inventory_label.pack_forget()
+        self.inventory_listbox.pack_forget()
+        self.back_to_encyclopedia_button.pack_forget()
+        self.caught_species_textbox.pack_forget()
 
+        # Show achievement information on page
+        self.back_to_main_button.pack(side="left", padx=10)
+        self.achievements_label.pack(side="top", pady=10)
+        self.achievements_listbox.pack(side="top", pady=10)
+
+        #update listbox with player achievement information
+        self.fill_achievements_listbox()
+
+    def fill_achievements_listbox(self):
+        '''fill the achievements listbox with player information'''
+
+        self.achievements_listbox.delete(0, tk.END)
+
+        for achievement in self.player.achievements:
+            self.achievements_listbox.insert(tk.END, f"Achievement: {achievement.name} ---------- Description: {achievement.description}")
+            if achievement.achieved == True:
+                self.achievements_listbox.itemconfig(tk.END, {'fg': 'green'})
+            else:
+                self.achievements_listbox.itemconfig(tk.END, {'fg': 'red'} )
 
     def quit_game(self):
         self.player.pickle_dump_data()
