@@ -1034,7 +1034,7 @@ class GameApp:
     def on_close(self):
         if self.player != None:
             self.player.pickle_dump_data()
-        self.root.quit() # closes window
+        self.root.quit() # close window
     
     def update_inventory(self):
         '''update inventory'''
