@@ -1,0 +1,96 @@
+Welcome to Fishtown! You may be a little confused about how things work here, so I'm here to help!
+
+Note: feel free to scroll down to view all of the help we have to offer!
+
+--------------------------------------------------------------------------------------------------------------
+
+The first thing you need to know is how to get around, and where you might want to go! Back on the main menu, you have a bunch of options for where to go next: 
+(1) Go Fishing
+(2) Shop
+(3) Encyclopedia
+(4) Locations
+(5) Gear
+(6) Achievements
+(7) Help - you already made it here!
+(8) Quit
+
+I'll break down what happens in each of these windows in some more detail. 
+
+---------------------------------------------------------------------------------------------------------------
+
+(1) Go Fishing. Here, you can go fishing. You can check your current location in the bottom left, which will tell you where you're currently fishing. You can
+click the "Catch Fish" button or (pro tip) press "F" to go fishing. This will open the fishing minigame, where you can click (or again, press "F"), when the slider
+is in the right spot, and you'll catch a fish! You'll notice the fish lands in your inventory with some stars next to it. 
+
+This is a good place to tell you a little more about how the fish work. There are some fish species that are unique to each location you might go fishing in. In your starting
+location (Local Pond), there are 10 fish species that you can catch. Each fish species has a "rarity", which tells you how rare it is to catch that kind of fish. Rarity levels go from
+
+(a) bronze
+(b) silver
+(c) gold
+(d) platinum
+(e) diamond
+
+with diamond being the rarest. Your fish will be color-coded in your inventory depending on how rare they are. 
+
+Beyond species rarity, there's also the individual grade that each of your caught fish receives (these are the ⭐⭐⭐⭐ that you see next to your fish). Grades are based on the following:
+
+(1) length - vs average length of that species
+(2) weight - vs average weight of that species
+(3) colouration - how vividly colored the fish is
+(4) condition - how healthy the fish is
+
+Grades are on a 5 star scale, but if your fish excels in ALL of the above categories, you can catch the elusive 6 star fish! (⭐⭐⭐⭐⭐⭐).
+
+There are some fun grades on the lower end, if the fish you catch ends up being rotten too (🤢). 
+
+You'll be paid more for higher quality fish, so when you catch a nice one, it's a big deal!
+
+There is a textbox at the bottom of this page that will show you detailed information about the fish you've caught, as well as other messages about leveling up or unlocking achievements. 
+
+---------------------------------------------------------------------------------------------------------------
+
+(2) Shop. Here, you can sell your fish and buy fishing equipment. Choose a fish from your inventory to sell, or sell all of your fish. 
+
+You can also buy new fishing rods, which are always in stock at the store. Fishing rods help make it a little easier to catch fish (i.e. the moving slider gets a little bit slower). 
+
+You earn gold coins for selling your fish, which can buy new fishing rods, or unlock new Locations in the Locations tab. 
+
+---------------------------------------------------------------------------------------------------------------
+
+(3) Encyclopedia. Here, you can view your list of caught fish species. These will show in green when you've caught a fish of that species, or red if you haven't yet. 
+
+You can get a sneak peek of what kind of fish are at the locations you haven't unlocked yet here too!
+
+---------------------------------------------------------------------------------------------------------------
+
+(4) Locations. Here, you can purchase new unlockable locations, and switch to new locations after you've unlocked them. 
+
+Whenever you load up the game, you'll be fishing at Local Pond. To switch a location, simply navigate here and select a location you've unlocked. 
+
+When you've unlocked a location, you can switch to fishing at that location by clicking the location's button one more time. 
+
+---------------------------------------------------------------------------------------------------------------
+
+(5) Gear. Here, you can view the Gear that your player owns, and switch to a different piece of gear if you want with the Equip Item button. This gear shows the items that you've bought
+from the shop. Remember, the fishing rods can slow down how fast the fishing slider moves!
+
+---------------------------------------------------------------------------------------------------------------
+
+(6) Achievements. Here, you can view your achievements. The achievement will be green if you have achieved it, or red if you have not. 
+
+The descriptions for each achievement tell you what you need to do to unlock that achievement. 
+
+---------------------------------------------------------------------------------------------------------------
+
+(7) Help and (8) Quit.
+
+You're already on the help page, and the quit will leave the game! Don't worry, your data will be saved across player sessions. 
+
+---------------------------------------------------------------------------------------------------------------
+
+This is a good place to talk about the player level.
+
+Your player level will start at 1 and increase as your gain more experience (XP). You'll notice that the levels slow down the higher your level gets. 
+
+Thanks for visiting the help page! I hope this cleared up some things for you. 

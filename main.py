@@ -311,6 +311,9 @@ class GameApp:
         # Achievements image and button
         self.achievements_image = tk.PhotoImage(file = "images/achievement.gif")
         self.achievements_button = tk.Button(self.root,text="Achievements", image=self.achievements_image, compound="top", command=self.view_achievements)
+        # Help image and button
+        self.help_image = tk.PhotoImage(file="images/help.gif")
+        self.help_button = tk.Button(self.root, text="Help", image=self.help_image, compound="top", command=self.view_help)
         # Quit image and button
         self.quit_image = tk.PhotoImage(file = "images/quit2.gif")
         self.quit_button = tk.Button(self.root, text="Quit", image=self.quit_image, compound="top", command=self.quit_game)
@@ -364,6 +367,9 @@ class GameApp:
         # Achievements Page Display
         self.achievements_label = tk.Label(self.root, text="Player Achievements", image=self.achievements_image, compound="top", font=("Times New Roman", 14)) 
         self.achievements_listbox = tk.Listbox(self.root, height=10, width=120, font=("Times New Roman", 10))
+
+        # Help Page Display
+        self.help_textbox = tk.Text(self.root, height=50, width=300, font=("Times New Roman",10))
         
 
     def start_game(self):
@@ -411,12 +417,8 @@ class GameApp:
         self.locations_button.pack(side="left", padx=10)
         self.gear_button.pack(side="left", padx=10)
         self.achievements_button.pack(side="left", padx=10)
+        self.help_button.pack(side="left", padx=10)
         self.quit_button.pack(side="left", padx=10)
-
-        # Inventory widgets
-        self.inventory_label.pack(side="top", pady=10)
-        self.inventory_listbox.pack(side="top", pady=5)
-        self.update_inventory()
 
         # Player gold display
         self.gold_label = tk.Label(self.root, text=f"{self.player.gold}", font=("Times New Roman", 10), image=self.gold_image, compound='top')
@@ -426,6 +428,13 @@ class GameApp:
         self.level_image = tk.PhotoImage(file = "images/level.gif")
         self.level_label = tk.Label(self.root, text = f"Level: {self.player.level}\nXP: {self.player.xp}\nXP to Next Level: {self.player.remaining_xp}", font=("Times New Roman", 10), image=self.level_image, compound='top')
         self.level_label.pack(side="right", padx=10)
+
+        # Inventory widgets
+        self.inventory_label.pack(side="top", pady=10)
+        self.inventory_listbox.pack(side="top", pady=5)
+        self.update_inventory()
+
+        
 
     def show_main_menu(self):
         '''show main menu. Often used in the return to main menu buttons.'''
@@ -454,6 +463,7 @@ class GameApp:
                 location_button.pack_forget()
         self.achievements_label.pack_forget()
         self.achievements_listbox.pack_forget()
+        self.help_textbox.pack_forget()
 
         # Show game buttons
         self.main_menu_label.pack(side="top", pady=10)
@@ -463,6 +473,7 @@ class GameApp:
         self.locations_button.pack(side="left", padx=10)
         self.gear_button.pack(side="left", padx=10)
         self.achievements_button.pack(side="left", padx=10)
+        self.help_button.pack(side="left", padx=10)
         self.quit_button.pack(side="left", padx=10)
 
         # Inventory widgets
@@ -500,6 +511,7 @@ class GameApp:
         self.locations_button.pack_forget()
         self.gear_button.pack_forget()
         self.achievements_button.pack_forget()
+        self.help_button.pack_forget()
         self.quit_button.pack_forget()
 
         # Create and show current location button
@@ -676,6 +688,7 @@ class GameApp:
         self.locations_button.pack_forget()
         self.gear_button.pack_forget()
         self.achievements_button.pack_forget()
+        self.help_button.pack_forget()
         self.quit_button.pack_forget()
 
         # Show shop items
@@ -787,6 +800,7 @@ class GameApp:
         self.locations_button.pack_forget()
         self.gear_button.pack_forget()
         self.achievements_button.pack_forget()
+        self.help_button.pack_forget()
         self.quit_button.pack_forget()
         self.inventory_label.pack_forget()
         self.inventory_listbox.pack_forget()
@@ -829,6 +843,7 @@ class GameApp:
         self.locations_button.pack_forget()
         self.gear_button.pack_forget()
         self.achievements_button.pack_forget()
+        self.help_button.pack_forget()
         self.quit_button.pack_forget()
         self.inventory_label.pack_forget()
         self.inventory_listbox.pack_forget()
@@ -893,6 +908,7 @@ class GameApp:
         self.locations_button.pack_forget()
         self.gear_button.pack_forget()
         self.achievements_button.pack_forget()
+        self.help_button.pack_forget()
         self.quit_button.pack_forget()
         self.inventory_label.pack_forget()
         self.inventory_listbox.pack_forget()
@@ -952,6 +968,7 @@ class GameApp:
         self.locations_button.pack_forget()
         self.gear_button.pack_forget()
         self.achievements_button.pack_forget()
+        self.help_button.pack_forget()
         self.quit_button.pack_forget()
         self.inventory_label.pack_forget()
         self.inventory_listbox.pack_forget()
@@ -977,6 +994,40 @@ class GameApp:
                 self.achievements_listbox.itemconfig(tk.END, {'fg': 'green'})
             else:
                 self.achievements_listbox.itemconfig(tk.END, {'fg': 'red'} )
+
+    def view_help(self):
+        '''view the help page which displays information about the game'''
+        # Hide buttons I don't want on this page
+        self.main_menu_label.pack_forget()
+        self.go_fishing_button.pack_forget()
+        self.shop_button.pack_forget()
+        self.encyclopedia_button.pack_forget()
+        self.locations_button.pack_forget()
+        self.gear_button.pack_forget()
+        self.achievements_button.pack_forget()
+        self.help_button.pack_forget()
+        self.quit_button.pack_forget()
+        self.inventory_label.pack_forget()
+        self.inventory_listbox.pack_forget()
+        self.back_to_encyclopedia_button.pack_forget()
+        self.caught_species_textbox.pack_forget()
+        self.level_label.pack_forget()
+        self.gold_label.pack_forget()
+
+        # Show help information on page
+        self.back_to_main_button.pack(side="left", padx=10)
+        self.help_textbox.pack(side="top", pady=10)
+
+        # load the help information
+        with open('help.txt', 'r', encoding='utf-8') as file:
+            help_text = file.read()
+
+        # display the help information in textbox
+        self.help_textbox.config(state=tk.NORMAL)
+        self.help_textbox.delete("1.0", tk.END)
+        self.help_textbox.insert(tk.END, help_text)
+        self.help_textbox.config(state=tk.DISABLED)
+
 
     def quit_game(self):
         self.player.pickle_dump_data()
