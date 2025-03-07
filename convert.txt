@@ -2,14 +2,13 @@ To create the executable file, follow the following instructions
 
 (1) Download the github repo
 
-(2) Run this pyinstaller code at the terminal, updating the path to your local repository
-pyinstaller --onefile --windowed --icon=images/icon.ico --add-data "images;images" --add-data "help.txt;." --add-data "player_data;player_data" "<PATH_TO_YOUR_LOCAL_REPOSITORY>\mpcs-51042-final\main.py"
-
+(2) Run this pyinstaller code at the terminal, updating with the path to your local repository
+pyinstaller --onefile --name=fishtown --distpath ./ --windowed --icon=images/icon.ico --add-data "images;images" --add-data "help.txt;." --add-data "player_data;player_data" "<PATH_TO_YOUR_LOCAL_REPOSITORY>\mpcs-51042-final\main.py"
 For example, my command prompt was:
 
-pyinstaller --onefile --windowed --icon=images/icon.ico --add-data "images;images" --add-data "help.txt;." --add-data "player_data;player_data" "C:\Users\mcvei\Desktop\UChicago Winter 25\MPCS-51042-Python\mpcs-51042-final\main.py"
+pyinstaller --onefile --name=fishtown --distpath ./ --windowed --icon=images/icon.ico --add-data "images;images" --add-data "help.txt;." --add-data "player_data;player_data" "C:\Users\mcvei\Desktop\UChicago Winter 25\MPCS-51042-Python\mpcs-51042-final\main.py"
 
-(3) This will create an executable file in a dist/ directory under your local repo
+(3) This will create an executable file in your main directory of your cloned repo. You can run the game from that executable file. 
 
 (4) Note - you may need to turn off Real-time protection under "Virus and threat protection settings" in Windows settings, 
 so that pyinstaller can create the executable. 
