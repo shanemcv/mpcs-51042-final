@@ -58,7 +58,7 @@ class Fish:
 
     def __str__(self):
         '''String representation of the caught fish'''
-        return (f"{self.grade} {self.species.name} of {self.colouration} Colouration and {self.condition} Condition ({self.length} in, {self.weight} lbs) on {self.time_caught.strftime('%Y-%m-%d %H:%M:%S')}")
+        return (f"{self.species.name} (Grade: {self.grade}) (Rarity: {self.species.rarity}) of {self.colouration} Colouration and {self.condition} Condition ({self.length} in, {self.weight} lbs) on {self.time_caught.strftime('%Y-%m-%d %H:%M:%S')}")
 
     def determine_length_grade(self):
         '''determines a length grade for a caught fish'''
@@ -225,21 +225,21 @@ class Fish:
         grade_raw = length_grade_numeric + weight_grade_numeric + colouration_numeric + condition_numeric
             
         if grade_raw == 560:
-            grade = "Perfect"
+            grade = "⭐⭐⭐⭐⭐⭐"
         elif grade_raw >= 558:
-            grade = "Diamond"
+            grade = "⭐⭐⭐⭐⭐"
         elif grade_raw >= 446:
-            grade = "Platinum"
+            grade = "⭐⭐⭐⭐"
         elif grade_raw >= 335:
-            grade = "Gold"
+            grade = "⭐⭐⭐"
         elif grade_raw >= 223:
-            grade = "Silver"
+            grade = "⭐⭐"
         elif grade_raw > 0:
-            grade = "Bronze"
+            grade = "⭐"
         elif grade_raw == -198:
-            grade = "Rotten"
+            grade = "🤢"
         else:
-            grade = "Copper"
+            grade = "🔶"
 
         return grade
     
@@ -260,21 +260,21 @@ class Fish:
             base_price = 64
 
         # adjust base price based on grade, using floor division where applicable
-        if self.grade == "Perfect":
+        if self.grade == "⭐⭐⭐⭐⭐⭐":
             sell_price = base_price * 8
-        elif self.grade == "Diamond":
+        elif self.grade == "⭐⭐⭐⭐⭐":
             sell_price = base_price * 4
-        elif self.grade == "Platinum":
+        elif self.grade == "⭐⭐⭐⭐":
             sell_price = base_price * 2
-        elif self.grade == "Gold":
+        elif self.grade == "⭐⭐⭐":
             sell_price = base_price * 1.5
-        elif self.grade == "Silver":
+        elif self.grade == "⭐⭐":
             sell_price = base_price
-        elif self.grade == "Bronze":
+        elif self.grade == "⭐":
             sell_price = base_price
-        elif self.grade == "Copper":
+        elif self.grade == "🔶":
             sell_price = base_price // 2
-        elif self.grade == "Rotten":
+        elif self.grade == "🤢":
             sell_price = 0
 
         # ensure convert to int

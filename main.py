@@ -7,10 +7,12 @@ from player import Player
 import tkinter as tk
 from tkinter import messagebox
 from locations import Location
+from gear import Gear
 
 def get_species():
     '''create the species list'''
 
+    # original small species list
     '''species_list = [
     Species("Bluegill", "A small, common freshwater fish found in ponds and lakes.", "bronze", 0.5, 6, 1, 0.1, 0.02),
     Species("Largemouth Bass", "A popular game fish known for its aggressive strikes.", "bronze", 0.6, 18, 3, 0.15, 0.05),
@@ -128,6 +130,7 @@ def get_locations(player):
     return locations_list
 
 def get_species_by_location(location):
+    '''gets available species by fishing location'''
 
     species_dict = {
         "Local Pond": [
@@ -226,6 +229,19 @@ def get_species_by_location(location):
     }
 
     return species_dict.get(location.name, [])
+
+def get_items_for_sale():
+    '''gets the current sale items'''
+
+    sale_list = [
+        Gear("Basic Fishing Rod", 10, True, False),
+        Gear("Bronze Fishing Rod", 500, False, False),
+        Gear("Silver Fishing Rod", 2000, False, False),
+        Gear("Gold Fishing Rod", 5000, False, False)
+    ]
+
+    return sale_list
+
     
 class GameApp:
     def __init__(self, root):
@@ -312,9 +328,15 @@ class GameApp:
         self.sell_1_fish_button = tk.Button(self.root, text="Sell One", command=self.sell_one)
         self.sell_all_fish_button = tk.Button(self.root, text="Sell All", command=self.sell_all)
 
+        # Shopping page salesbox
+        self.sales_image = tk.PhotoImage(file = "images/shop.gif")
+        self.sales_label = tk.Label(self.root, text="Items for Sale", image=self.sales_image, compound="top", font=("Times New Roman", 14))
+        self.sales_listbox = tk.Listbox(self.root, height=5, width=30, font=("Times New Roman", 10))
+        self.buy_one_button = tk.Button(self.root, text="Buy Selected Item", command=self.buy_one)
+
         # Encyclopedia page buttons and options
         self.caught_species_button = tk.Button(self.root, text="View Caught Species", command=self.caught_species)
-        self.caught_species_textbox = tk.Text(self.root, height=40, width=50, font=("Arial",10))
+        self.caught_species_textbox = tk.Text(self.root, height=40, width=50, font=("Times New Roman",10))
 
         # Caught Species Page options
         self.back_to_encyclopedia_button = tk.Button(self.root, text="Back to Encyclopedia", command=self.view_encyclopedia)
@@ -322,13 +344,18 @@ class GameApp:
         # Inventory image and buttons - initially hidden
         self.inventory_image = tk.PhotoImage(file = "images/inventory.gif")
         self.inventory_label = tk.Label(self.root, text="Inventory", image=self.inventory_image, compound="top", font=("Times New Roman", 14))
-        self.inventory_listbox = tk.Listbox(self.root, height=16, width=30, font=("Times New Roman", 10))
+        self.inventory_listbox = tk.Listbox(self.root, height=16, width=40, font=("Times New Roman", 10))
 
         # Location placeholder
         self.current_location_label = False
 
         # Player Gold Image - initially hidden
         self.gold_image = tk.PhotoImage(file = "images/gold32x32.png")
+
+        # Gear Page Display
+        self.gear_label = tk.Label(self.root, text="Player Gear", image=self.gear_image, compound="top", font=("Times New Roman", 10))
+        self.gear_listbox = tk.Listbox(self.root, height=5, width=50, font=("Times New Roman", 10))
+        self.equip_item_button = tk.Button(self.root, text="Equip Selected Item", command=self.equip_item)  
         
 
     def start_game(self):
@@ -397,6 +424,9 @@ class GameApp:
         # Backup player data whenever main menu is accessed.
         self.player.pickle_dump_data()
 
+        # Unbind catch fish key; if applicable
+        self.root.unbind("<f>")
+
         # Hide all buttons first
         self.catch_fish_button.pack_forget()
         self.back_to_main_button.pack_forget()
@@ -434,6 +464,16 @@ class GameApp:
         # Player Level Display
         self.level_label.pack(side = "right", padx = 10)
 
+        # Hide shop labels
+        self.sales_label.pack_forget()
+        self.sales_listbox.pack_forget()
+        self.buy_one_button.pack_forget()
+
+        # Hide gear labels
+        self.gear_label.pack_forget()
+        self.gear_listbox.pack_forget()
+        self.equip_item_button.pack_forget()
+
         # update catch fish button to respect the current location
         # self.catch_fish_button.config(command=lambda: self.catch_fish(get_species_by_location(self.current_location), self.player))
     
@@ -457,6 +497,9 @@ class GameApp:
         self.catch_fish_button.pack(side="left", padx=10)
         self.back_to_main_button.pack(side="left", padx=10)
         self.textbox.pack(side=tk.BOTTOM, fill=tk.X)
+
+        # Bind f key to catch_fish_button
+        self.root.bind("<f>", lambda event: self.fishing_minigame())
 
         '''# Create a scrollbar widget
         scrollbar = tk.Scrollbar(self.root, command=self.textbox.yview)
@@ -495,6 +538,10 @@ class GameApp:
     def fishing_minigame(self):
         '''fishing minigame for catching fish, using a slider'''
 
+        if len(self.player.inventory) >= 16:
+            messagebox.showinfo("Inventory full", "Your inventory is full. Sell your fish!")
+            return
+
         # remove for duration of minigame
         self.current_location_label.pack_forget()
         self.catch_fish_button.pack_forget()
@@ -505,6 +552,10 @@ class GameApp:
         self.minigame_window = tk.Toplevel(self.root)
         self.minigame_window.title("Fishing!")
         self.minigame_window.iconbitmap("images/icon.ico") 
+
+        # force focus and bind f key
+        self.minigame_window.focus_set()
+        self.minigame_window.bind("<f>", lambda event: self.attempt_catch())
 
         # set up slider
         self.canvas = tk.Canvas(self.minigame_window, width=300, height=50, bg='lightblue')
@@ -517,8 +568,8 @@ class GameApp:
         self.running = True
 
         # catch button and label
-        self.catch_button = tk.Button(self.minigame_window, text="Stop!", font=("Times New Roman", 12), command=self.attempt_catch)
-        self.catch_label = tk.Label(self.minigame_window, text="Press when the slider is in the green zone!", font=("Times New Roman", 12))
+        self.catch_button = tk.Button(self.minigame_window, text="Catch Fish!", font=("Times New Roman", 12), command=self.attempt_catch)
+        self.catch_label = tk.Label(self.minigame_window, text="Press when the fish is in the green zone!\nTip: use the f-key to catch!", font=("Times New Roman", 12))
         self.catch_button.pack(pady=10)
         self.catch_label.pack(pady=10)
         # pack the canvas
@@ -529,11 +580,30 @@ class GameApp:
             if not self.running:
                 return # if minigame ended
             
+            # set base speed. This is subject to change based on fishing rod equipped. Note that a higher number is "slower".
+            base_speed = 15
+
+            # find player's equipped rod
+            for item in self.player.gear:
+                if item.equipped == True:
+                    rod_selection = item.name
+
+            # use the equipped rod to slow the slider down
+            if rod_selection == "Basic Fishing Rod":
+                speed = base_speed
+            elif rod_selection == "Bronze Fishing Rod":
+                speed = base_speed * 1.2
+            elif rod_selection == "Silver Fishing Rod":
+                speed = base_speed * 1.4
+            elif rod_selection == "Gold Fishing Rod":
+                speed = base_speed * 2
+
+            
             self.slider_pos += self.direction
             if self.slider_pos >= 220 or self.slider_pos <= 20:
                 self.direction *= -1 # reverse
             self.canvas.coords(self.slider, self.slider_pos, 15, self.slider_pos + 10, 35)
-            self.root.after(15, move_slider)
+            self.root.after(speed, move_slider)
 
         # start moving the slider
         move_slider()
@@ -548,7 +618,7 @@ class GameApp:
         self.minigame_result = False
         if distance_from_center <= 10:
             self.minigame_result = True
-        self.catch_label.config(text="Success!" if self.minigame_result else "Missed!")
+        self.catch_label.config(text="Success!\nNice catch!" if self.minigame_result else "Missed!\nThe one that got away...")
         self.minigame_window.after(1000, self.close_minigame_window)
 
     def close_minigame_window(self):
@@ -556,8 +626,10 @@ class GameApp:
         self.canvas.pack_forget()
         self.catch_button.pack_forget()
         self.catch_label.pack_forget()
-        
 
+        # Unbind
+        self.minigame_window.unbind("<f>")
+        
         # close minigame window
         self.minigame_window.destroy()
 
@@ -582,10 +654,19 @@ class GameApp:
         self.gear_button.pack_forget()
         self.quit_button.pack_forget()
 
+        # Show shop items
+        self.buy_one_button.pack(side="bottom", pady=10)
+        self.sales_listbox.pack(side = "bottom", pady=10)
+        self.create_sale_items()
+        self.sales_label.pack(side = "bottom", pady=10)
+        
+
         # Show shopping options on the page
-        self.sell_1_fish_button.pack(side = "left", padx=10)
-        self.sell_all_fish_button.pack(side = "left", padx=10)
+        self.sell_1_fish_button.pack(side = "top", pady=10)
+        self.sell_all_fish_button.pack(side = "top", pady=10)
         self.back_to_main_button.pack(side = "left", padx=10)
+
+        
 
     def sell_one(self):
         '''sell one fish'''
@@ -611,7 +692,7 @@ class GameApp:
         self.update_inventory()
 
         # Show message confirming sale
-        tk.messagebox.showinfo("Fish Sold", f"You sold a {sold_fish.grade} {sold_fish.species.name} for {sold_fish.sell_price} gold.")
+        tk.messagebox.showinfo("Fish Sold", f"You sold a {sold_fish.species.name} ({sold_fish.grade}) for {sold_fish.sell_price} gold.")
 
     def sell_all(self):
         '''sell all fish in inventory'''
@@ -630,6 +711,40 @@ class GameApp:
 
         # Update the inventory at the end            
         self.update_inventory()
+
+    def create_sale_items(self):
+        '''creates the items for sale in the shop'''
+
+        self.sales_listbox.delete(0, tk.END)
+        self.sale_items = get_items_for_sale()
+        for sale_item in self.sale_items:
+            self.sales_listbox.insert(tk.END, f"{sale_item.name}, Price: {sale_item.price}")
+
+    def buy_one(self):
+        '''buy selected sale item'''
+
+        # Grab current selection
+        selected_index = self.sales_listbox.curselection()
+
+        # Check if there's no selection
+        if not selected_index:
+            tk.messagebox.showinfo("No Selection", "Please select an item to buy.")
+            return
+        
+        # Get correct item from the selected index
+        selected_index = selected_index[0] # curselection uses a tuple, so this extracts from that tuple
+        bought_item = self.sale_items[selected_index]
+
+        # add gold for selling the fish
+        self.player.gold -= bought_item.price
+        # update gold label
+        self.gold_label.config(text=f"{self.player.gold}")
+
+        # Update player gear
+        self.player.gear.append(bought_item)
+
+        # Show message confirming sale
+        tk.messagebox.showinfo("Item Bought", f"You bought a {bought_item.name} for {bought_item.price} gold.")
 
     def view_encyclopedia(self):
         '''encyclopedia options'''
@@ -734,7 +849,65 @@ class GameApp:
 
 
     def view_gear(self):
-        print("You chose to view gear!")
+        '''view player gear'''
+
+        # Hide buttons I don't want on this page
+        self.main_menu_label.pack_forget()
+        self.go_fishing_button.pack_forget()
+        self.shop_button.pack_forget()
+        self.encyclopedia_button.pack_forget()
+        self.locations_button.pack_forget()
+        self.gear_button.pack_forget()
+        self.quit_button.pack_forget()
+        self.inventory_label.pack_forget()
+        self.inventory_listbox.pack_forget()
+        self.back_to_encyclopedia_button.pack_forget()
+        self.caught_species_textbox.pack_forget()
+
+        # Set up buttons to show on this page
+        self.back_to_main_button.pack(side="left", padx=10)
+
+        # Gear Page Display
+        self.gear_label.pack(side="top", pady=10)
+        self.gear_listbox.pack(side="top", pady=10)
+        self.create_gear_listbox()
+        self.equip_item_button.pack(side="top", pady=10)
+
+    def create_gear_listbox(self):
+        '''creates the player gear display'''
+
+        self.gear_listbox.delete(0, tk.END)
+
+        for item in self.player.gear:
+            self.gear_listbox.insert(tk.END, f"{item.name}, Equipped: {item.equipped}")
+            if item.equipped == True:
+                self.gear_listbox.itemconfig(tk.END, {'fg': 'green'})
+
+    def equip_item(self):
+        '''equip the selected item'''
+        # Grab current selection
+        selected_index = self.gear_listbox.curselection()
+
+        # Check if there's no selection
+        if not selected_index:
+            tk.messagebox.showinfo("No Selection", "Please select an item to equip.")
+            return
+        
+        # Get correct fish from the selected index
+        selected_index = selected_index[0] # curselection uses a tuple, so this extracts from that tuple
+        # set all other equipped items to false
+        for item in self.player.gear:
+            item.equipped = False
+        # equip the selected item
+        self.player.gear[selected_index].equipped = True
+
+        # update gear listbox
+        self.create_gear_listbox()
+
+        # Show message confirming sale
+        tk.messagebox.showinfo("Item Equipped", f"You equipped {self.player.gear[selected_index].name}")
+
+
 
     def quit_game(self):
         self.player.pickle_dump_data()
@@ -748,7 +921,7 @@ class GameApp:
         '''update inventory'''
         self.inventory_listbox.delete(0, tk.END)
         for fish in self.player.inventory:
-            self.inventory_listbox.insert(tk.END, f"{fish.grade} {fish.species.name}")  # Make sure Fish class has __str__ defined
+            self.inventory_listbox.insert(tk.END, f"{fish.species.name} ({fish.grade})")
             if fish.species.rarity == "diamond":
                 self.inventory_listbox.itemconfig(tk.END, {'fg': 'cyan'})
             elif fish.species.rarity == "platinum":

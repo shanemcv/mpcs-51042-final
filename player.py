@@ -2,6 +2,7 @@
 # holds player information
 
 from fish import Species, Fish
+from gear import Gear
 import pickle
 import os
 import math
@@ -31,6 +32,9 @@ class Player:
         self.xp = self.initialize_xp()
         self.level = self.get_level(self.xp)
         self.remaining_xp = self.get_xp_to_next_level(self.xp)
+
+        # initialize gear
+        self.gear = self.initialize_gear()
 
     def initialize_caught_species(self):
         '''initialize the caught species list'''
@@ -113,7 +117,7 @@ class Player:
     
     def initialize_gold(self):
         '''initialize the player's gold, loading from a previous save if applicable'''
-        self.gold = 1000000
+        self.gold = 0
 
         # Reading the pickle file to update caught species list. 
         filepath = f'./player_data/.{self.username}/.{self.username}.gold.pickle'
@@ -206,6 +210,32 @@ class Player:
         
         remaining_xp = xp_for_next - xp
         return remaining_xp
+    
+    def initialize_gear(self):
+        '''initialize the player's gear, loading from a previous save if applicable'''
+        self.gear = [Gear("Basic Fishing Rod", 10, True, True)]
+        
+        # Reading the pickle file to update gear list. 
+        filepath = f'./player_data/.{self.username}/.{self.username}.gear.pickle'
+
+        # Ensure the subdirectory exists * note, probably redundant because the initialize_caught_species function always runs this first, so can probably delete. 
+        os.makedirs(f'./player_data/.{self.username}', exist_ok=True)
+
+        # Write file
+        if not os.path.exists(filepath):
+            with open(filepath, 'wb') as file:
+                pickle.dump(self.gear,file)
+        with open(f'./player_data/.{self.username}/.{self.username}.gear.pickle', 'rb') as file:
+            try:
+                pickle_data = pickle.load(file)
+            except:
+                return
+            else:
+                self.gear = pickle_data
+
+        self.gear = list(set(self.gear)) # remove duplicate items
+
+        return self.gear
 
     def pickle_dump_data(self):
         '''pickles all player information into files'''
@@ -221,6 +251,8 @@ class Player:
             pickle.dump(self.unlocked_locations,file)
         with open(f'./player_data/.{self.username}/.{self.username}.xp.pickle', 'wb') as file:
             pickle.dump(self.xp,file)
+        with open(f'./player_data/.{self.username}/.{self.username}.gear.pickle', 'wb') as file:
+            pickle.dump(self.gear,file)
         
 
 
