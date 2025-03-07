@@ -13,7 +13,7 @@ from achievements import Achievement
 def get_species():
     '''create the species list'''
 
-    # original small species list
+    # original small species list, leaving for posterity
     '''species_list = [
     Species("Bluegill", "A small, common freshwater fish found in ponds and lakes.", "bronze", 0.5, 6, 1, 0.1, 0.02),
     Species("Largemouth Bass", "A popular game fish known for its aggressive strikes.", "bronze", 0.6, 18, 3, 0.15, 0.05),
@@ -258,7 +258,7 @@ class GameApp:
         # game icon
         root.iconbitmap("images/icon.ico") 
 
-        # Bind the window close (X button) to a custom method
+        # Bind the window close (X button) to on_close method
         self.root.protocol("WM_DELETE_WINDOW", self.on_close)
 
         # Background image
@@ -325,7 +325,7 @@ class GameApp:
         # Fishing page options
         self.catch_fish_button = tk.Button(self.root, 
                                    text="Catch Fish!", 
-                                   command=lambda: self.fishing_minigame()) # lambda means this function isn't called immediately.
+                                   command=lambda: self.fishing_minigame())
         self.back_to_main_button = tk.Button(self.root,text="Main Menu", command=self.show_main_menu)
 
         # Create a Text widget for logging actions
@@ -382,26 +382,15 @@ class GameApp:
             # Display an error if username is empty
             messagebox.showerror("Input Error", "Please enter a valid username.")
             return
-        
-        '''# Check if the username already exists
-        if username in player_data:
-            # Load existing player data
-            self.player = player_data[username]
-            messagebox.showinfo("Welcome Back", f"Welcome back, {self.player.username}!")
-        else:'''
+
         # Create a new player instance with the username
         self.player = Player(username)
-        # player_data = {}
-        # player_data[username] = self.player  # Save the new player data
         messagebox.showinfo("Welcome", f"Welcome, {self.player.username}!")
 
         # initialize locations based on player
         self.locations_list = get_locations(self.player)
         self.current_location = self.locations_list[0] # start at Local Pond
         self.location_buttons = []
-
-        # # update catch fish button to respect the current location
-        # self.catch_fish_button.config(command=lambda: self.catch_fish(get_species_by_location(self.current_location), self.player))
 
         # Hide username prompt and start button
         self.username_label.pack_forget()
@@ -434,7 +423,6 @@ class GameApp:
         self.inventory_listbox.pack(side="top", pady=5)
         self.update_inventory()
 
-        
 
     def show_main_menu(self):
         '''show main menu. Often used in the return to main menu buttons.'''
@@ -497,8 +485,6 @@ class GameApp:
         self.gear_listbox.pack_forget()
         self.equip_item_button.pack_forget()
 
-        # update catch fish button to respect the current location
-        # self.catch_fish_button.config(command=lambda: self.catch_fish(get_species_by_location(self.current_location), self.player))
     
     def go_fishing(self,species_list,player):
         '''fishing loop'''
@@ -526,12 +512,6 @@ class GameApp:
         # Bind f key to catch_fish_button
         self.root.bind("<f>", lambda event: self.fishing_minigame())
 
-        '''# Create a scrollbar widget
-        scrollbar = tk.Scrollbar(self.root, command=self.textbox.yview)
-        scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
-
-        # Link the scrollbar to the text widget
-        self.textbox.config(yscrollcommand=scrollbar.set)'''
 
     def catch_fish(self,species_list,player):
         '''catch a fish, uses the button defined above'''
@@ -702,7 +682,6 @@ class GameApp:
         self.sell_1_fish_button.pack(side = "top", pady=10)
         self.sell_all_fish_button.pack(side = "top", pady=10)
         self.back_to_main_button.pack(side = "left", padx=10)
-
         
 
     def sell_one(self):
