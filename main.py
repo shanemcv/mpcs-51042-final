@@ -9,6 +9,23 @@ from tkinter import messagebox
 from locations import Location
 from gear import Gear
 from achievements import Achievement
+import pickle
+import os
+import sys
+
+
+def get_asset_path(relative_path):
+    '''
+    in order to run this game as an executable file, we need to be able to change the relative path to get the path that the 
+    executable installer will use
+    '''
+
+    if getattr(sys, 'frozen', False): # boilerplate for running as .exe
+        base_path = sys._MEIPASS
+    else:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path,relative_path)
 
 def get_species():
     '''create the species list'''
@@ -256,13 +273,13 @@ class GameApp:
         self.root.geometry("1306x735")  # Set the window size 
 
         # game icon
-        root.iconbitmap("images/icon.ico") 
+        root.iconbitmap(get_asset_path("images/icon.ico"))
 
         # Bind the window close (X button) to on_close method
         self.root.protocol("WM_DELETE_WINDOW", self.on_close)
 
         # Background image
-        self.bg_image = tk.PhotoImage(file = "images/bg_1306_735.gif")
+        self.bg_image = tk.PhotoImage(file = get_asset_path("images/bg_1306_735.gif"))
         #self.bg_image = self.bg_image.subsample(2,2)
         self.bg_label = tk.Label(self.root, image=self.bg_image)
         self.bg_label.place(relwidth=1,relheight=1) # stretch to fill window
@@ -289,7 +306,7 @@ class GameApp:
                                     font=("Times New Roman", 30, "bold"),
                                     fg="dodger blue")
         # Go fish image and button
-        self.go_fish_image = tk.PhotoImage(file = "images/go_fish.gif")
+        self.go_fish_image = tk.PhotoImage(file = get_asset_path("images/go_fish.gif"))
         self.go_fishing_button = tk.Button(self.root, 
                                    text="Go Fishing",
                                    image=self.go_fish_image,
@@ -297,25 +314,25 @@ class GameApp:
                                    bg=self.root['bg'], # respect background color of tkinter window
                                    command=lambda: self.go_fishing(self.species_list, self.player)) # lambda means this function isn't called immediately.
         # Shop image and button
-        self.shop_image = tk.PhotoImage(file = "images/shop.gif")
+        self.shop_image = tk.PhotoImage(file = get_asset_path("images/shop.gif"))
         self.shop_button = tk.Button(self.root, text="Shop", image=self.shop_image, compound="top", command=self.go_shopping)
         # Encyclopedia image and button
-        self.encyclopedia_image = tk.PhotoImage(file = "images/encyclopedia.gif")
+        self.encyclopedia_image = tk.PhotoImage(file = get_asset_path("images/encyclopedia.gif"))
         self.encyclopedia_button = tk.Button(self.root, text="Encyclopedia", image=self.encyclopedia_image, compound="top", command=self.view_encyclopedia)
         # Location image and button
-        self.location_image = tk.PhotoImage(file = "images/location.gif")
+        self.location_image = tk.PhotoImage(file = get_asset_path("images/location.gif"))
         self.locations_button = tk.Button(self.root, text="Locations", image=self.location_image, compound="top", command=self.view_locations)
         # Gear image and button
-        self.gear_image = tk.PhotoImage(file = "images/gear.gif")
+        self.gear_image = tk.PhotoImage(file = get_asset_path("images/gear.gif"))
         self.gear_button = tk.Button(self.root, text="Gear", image=self.gear_image, compound="top", command=self.view_gear)
         # Achievements image and button
-        self.achievements_image = tk.PhotoImage(file = "images/achievement.gif")
+        self.achievements_image = tk.PhotoImage(file = get_asset_path("images/achievement.gif"))
         self.achievements_button = tk.Button(self.root,text="Achievements", image=self.achievements_image, compound="top", command=self.view_achievements)
         # Help image and button
-        self.help_image = tk.PhotoImage(file="images/help.gif")
+        self.help_image = tk.PhotoImage(file=get_asset_path("images/help.gif"))
         self.help_button = tk.Button(self.root, text="Help", image=self.help_image, compound="top", command=self.view_help)
         # Quit image and button
-        self.quit_image = tk.PhotoImage(file = "images/quit2.gif")
+        self.quit_image = tk.PhotoImage(file = get_asset_path("images/quit2.gif"))
         self.quit_button = tk.Button(self.root, text="Quit", image=self.quit_image, compound="top", command=self.quit_game)
 
         # Button to start the game (after entering the username)
@@ -336,7 +353,7 @@ class GameApp:
         self.sell_all_fish_button = tk.Button(self.root, text="Sell All", command=self.sell_all)
 
         # Shopping page salesbox
-        self.sales_image = tk.PhotoImage(file = "images/shop.gif")
+        self.sales_image = tk.PhotoImage(file = get_asset_path("images/shop.gif"))
         self.sales_label = tk.Label(self.root, text="Items for Sale", image=self.sales_image, compound="top", font=("Times New Roman", 14))
         self.sales_listbox = tk.Listbox(self.root, height=5, width=30, font=("Times New Roman", 10))
         self.buy_one_button = tk.Button(self.root, text="Buy Selected Item", command=self.buy_one)
@@ -349,7 +366,7 @@ class GameApp:
         self.back_to_encyclopedia_button = tk.Button(self.root, text="Back to Encyclopedia", command=self.view_encyclopedia)
 
         # Inventory image and buttons - initially hidden
-        self.inventory_image = tk.PhotoImage(file = "images/inventory.gif")
+        self.inventory_image = tk.PhotoImage(file = get_asset_path("images/inventory.gif"))
         self.inventory_label = tk.Label(self.root, text="Inventory", image=self.inventory_image, compound="top", font=("Times New Roman", 14))
         self.inventory_listbox = tk.Listbox(self.root, height=16, width=40, font=("Times New Roman", 10))
 
@@ -357,7 +374,7 @@ class GameApp:
         self.current_location_label = False
 
         # Player Gold Image - initially hidden
-        self.gold_image = tk.PhotoImage(file = "images/gold32x32.png")
+        self.gold_image = tk.PhotoImage(file = get_asset_path("images/gold32x32.png"))
 
         # Gear Page Display
         self.gear_label = tk.Label(self.root, text="Player Gear", image=self.gear_image, compound="top", font=("Times New Roman", 10))
@@ -414,7 +431,7 @@ class GameApp:
         self.gold_label.pack(side="right", padx=10)
 
         # Player Level display
-        self.level_image = tk.PhotoImage(file = "images/level.gif")
+        self.level_image = tk.PhotoImage(file = get_asset_path("images/level.gif"))
         self.level_label = tk.Label(self.root, text = f"Level: {self.player.level}\nXP: {self.player.xp}\nXP to Next Level: {self.player.remaining_xp}", font=("Times New Roman", 10), image=self.level_image, compound='top')
         self.level_label.pack(side="right", padx=10)
 
@@ -428,7 +445,8 @@ class GameApp:
         '''show main menu. Often used in the return to main menu buttons.'''
 
         # Backup player data whenever main menu is accessed.
-        self.player.pickle_dump_data()
+        if self.player != None:
+            self.player.pickle_dump_data()
 
         # Unbind catch fish key; if applicable
         self.root.unbind("<f>")
@@ -566,7 +584,7 @@ class GameApp:
         # new window for fishing minigame
         self.minigame_window = tk.Toplevel(self.root)
         self.minigame_window.title("Fishing!")
-        self.minigame_window.iconbitmap("images/icon.ico") 
+        self.minigame_window.iconbitmap(get_asset_path("images/icon.ico")) 
 
         # force focus and bind f key
         self.minigame_window.focus_set()
@@ -998,7 +1016,7 @@ class GameApp:
         self.help_textbox.pack(side="top", pady=10)
 
         # load the help information
-        with open('help.txt', 'r', encoding='utf-8') as file:
+        with open(get_asset_path('help.txt'), 'r', encoding='utf-8') as file:
             help_text = file.read()
 
         # display the help information in textbox
@@ -1009,11 +1027,13 @@ class GameApp:
 
 
     def quit_game(self):
-        self.player.pickle_dump_data()
+        if self.player != None:
+            self.player.pickle_dump_data()
         self.root.quit()  # Close the window
     
     def on_close(self):
-        self.player.pickle_dump_data()
+        if self.player != None:
+            self.player.pickle_dump_data()
         self.root.quit() # closes window
     
     def update_inventory(self):

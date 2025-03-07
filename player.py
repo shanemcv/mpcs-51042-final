@@ -6,7 +6,22 @@ from gear import Gear
 from achievements import Achievement
 import pickle
 import os
+import pickle
+import sys
 import math
+
+def get_asset_path(relative_path):
+    '''
+    in order to run this game as an executable file, we need to be able to change the relative path to get the path that the 
+    executable installer will use
+    '''
+
+    if getattr(sys, 'frozen', False): # boilerplate for running as .exe
+        base_path = sys._MEIPASS
+    else:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path,relative_path)
 
 class Player:
     '''a player of the game'''
@@ -50,16 +65,16 @@ class Player:
         for species in species_list:
             self.caught_species[species.name] = False
         # Reading the pickle file to update caught species list. 
-        filepath = f'./player_data/.{self.username}/.{self.username}.caught_species.pickle'
+        filepath = get_asset_path(f'./player_data/.{self.username}/.{self.username}.caught_species.pickle')
 
         # Ensure the subdirectory exists
-        os.makedirs(f'./player_data/.{self.username}', exist_ok=True)
+        os.makedirs(get_asset_path(f'./player_data/.{self.username}'), exist_ok=True)
 
         # Write file
         if not os.path.exists(filepath):
             with open(filepath, 'wb') as file:
                 pickle.dump(self.caught_species,file)
-        with open(f'./player_data/.{self.username}/.{self.username}.caught_species.pickle', 'rb') as file:
+        with open(get_asset_path(f'./player_data/.{self.username}/.{self.username}.caught_species.pickle'), 'rb') as file:
             try:
                 pickle_data = pickle.load(file)
             except:
@@ -74,16 +89,16 @@ class Player:
         self.caught_fish = []
 
         # Reading the pickle file to update caught species list. 
-        filepath = f'./player_data/.{self.username}/.{self.username}.caught_fish.pickle'
+        filepath = get_asset_path(f'./player_data/.{self.username}/.{self.username}.caught_fish.pickle')
 
         # Ensure the subdirectory exists * note, probably redundant because the initialize_caught_species function always runs this first, so can probably delete. 
-        os.makedirs(f'./player_data/.{self.username}', exist_ok=True)
+        os.makedirs(get_asset_path(f'./player_data/.{self.username}'), exist_ok=True)
 
         # Write file
         if not os.path.exists(filepath):
             with open(filepath, 'wb') as file:
                 pickle.dump(self.caught_fish,file)
-        with open(f'./player_data/.{self.username}/.{self.username}.caught_fish.pickle', 'rb') as file:
+        with open(get_asset_path(f'./player_data/.{self.username}/.{self.username}.caught_fish.pickle'), 'rb') as file:
             try:
                 pickle_data = pickle.load(file)
             except:
@@ -99,16 +114,16 @@ class Player:
         self.inventory = []
 
         # Reading the pickle file to update caught species list. 
-        filepath = f'./player_data/.{self.username}/.{self.username}.inventory.pickle'
+        filepath = get_asset_path(f'./player_data/.{self.username}/.{self.username}.inventory.pickle')
 
         # Ensure the subdirectory exists * note, probably redundant because the initialize_caught_species function always runs this first, so can probably delete. 
-        os.makedirs(f'./player_data/.{self.username}', exist_ok=True)
+        os.makedirs(get_asset_path(f'./player_data/.{self.username}'), exist_ok=True)
 
         # Write file
         if not os.path.exists(filepath):
             with open(filepath, 'wb') as file:
                 pickle.dump(self.inventory,file)
-        with open(f'./player_data/.{self.username}/.{self.username}.inventory.pickle', 'rb') as file:
+        with open(get_asset_path(f'./player_data/.{self.username}/.{self.username}.inventory.pickle'), 'rb') as file:
             try:
                 pickle_data = pickle.load(file)
             except:
@@ -124,16 +139,16 @@ class Player:
         self.gold = 0
 
         # Reading the pickle file to update caught species list. 
-        filepath = f'./player_data/.{self.username}/.{self.username}.gold.pickle'
+        filepath = get_asset_path(f'./player_data/.{self.username}/.{self.username}.gold.pickle')
 
         # Ensure the subdirectory exists * note, probably redundant because the initialize_caught_species function always runs this first, so can probably delete. 
-        os.makedirs(f'./player_data/.{self.username}', exist_ok=True)
+        os.makedirs(get_asset_path(f'./player_data/.{self.username}'), exist_ok=True)
 
         # Write file
         if not os.path.exists(filepath):
             with open(filepath, 'wb') as file:
                 pickle.dump(self.gold,file)
-        with open(f'./player_data/.{self.username}/.{self.username}.gold.pickle', 'rb') as file:
+        with open(get_asset_path(f'./player_data/.{self.username}/.{self.username}.gold.pickle'), 'rb') as file:
             try:
                 pickle_data = pickle.load(file)
             except:
@@ -148,16 +163,16 @@ class Player:
         self.unlocked_locations = {"Local Pond"}
         
         # Reading the pickle file to update locations list. 
-        filepath = f'./player_data/.{self.username}/.{self.username}.locations.pickle'
+        filepath = get_asset_path(f'./player_data/.{self.username}/.{self.username}.locations.pickle')
 
         # Ensure the subdirectory exists * note, probably redundant because the initialize_caught_species function always runs this first, so can probably delete. 
-        os.makedirs(f'./player_data/.{self.username}', exist_ok=True)
+        os.makedirs(get_asset_path(f'./player_data/.{self.username}'), exist_ok=True)
 
         # Write file
         if not os.path.exists(filepath):
             with open(filepath, 'wb') as file:
                 pickle.dump(self.unlocked_locations,file)
-        with open(f'./player_data/.{self.username}/.{self.username}.locations.pickle', 'rb') as file:
+        with open(get_asset_path(f'./player_data/.{self.username}/.{self.username}.locations.pickle'), 'rb') as file:
             try:
                 pickle_data = pickle.load(file)
             except:
@@ -173,16 +188,16 @@ class Player:
         self.xp = 0
 
         # Reading the pickle file to update caught species list. 
-        filepath = f'./player_data/.{self.username}/.{self.username}.xp.pickle'
+        filepath = get_asset_path(f'./player_data/.{self.username}/.{self.username}.xp.pickle')
 
         # Ensure the subdirectory exists * note, probably redundant because the initialize_caught_species function always runs this first, so can probably delete. 
-        os.makedirs(f'./player_data/.{self.username}', exist_ok=True)
+        os.makedirs(get_asset_path(f'./player_data/.{self.username}'), exist_ok=True)
 
         # Write file
         if not os.path.exists(filepath):
             with open(filepath, 'wb') as file:
                 pickle.dump(self.xp,file)
-        with open(f'./player_data/.{self.username}/.{self.username}.xp.pickle', 'rb') as file:
+        with open(get_asset_path(f'./player_data/.{self.username}/.{self.username}.xp.pickle'), 'rb') as file:
             try:
                 pickle_data = pickle.load(file)
             except:
@@ -220,16 +235,16 @@ class Player:
         self.gear = [Gear("Basic Fishing Rod", 10, True, True)]
         
         # Reading the pickle file to update gear list. 
-        filepath = f'./player_data/.{self.username}/.{self.username}.gear.pickle'
+        filepath = get_asset_path(f'./player_data/.{self.username}/.{self.username}.gear.pickle')
 
         # Ensure the subdirectory exists * note, probably redundant because the initialize_caught_species function always runs this first, so can probably delete. 
-        os.makedirs(f'./player_data/.{self.username}', exist_ok=True)
+        os.makedirs(get_asset_path(f'./player_data/.{self.username}'), exist_ok=True)
 
         # Write file
         if not os.path.exists(filepath):
             with open(filepath, 'wb') as file:
                 pickle.dump(self.gear,file)
-        with open(f'./player_data/.{self.username}/.{self.username}.gear.pickle', 'rb') as file:
+        with open(get_asset_path(f'./player_data/.{self.username}/.{self.username}.gear.pickle'), 'rb') as file:
             try:
                 pickle_data = pickle.load(file)
             except:
@@ -252,16 +267,16 @@ class Player:
         ]
         
         # Reading the pickle file to update achievements list. 
-        filepath = f'./player_data/.{self.username}/.{self.username}.achievements.pickle'
+        filepath = get_asset_path(f'./player_data/.{self.username}/.{self.username}.achievements.pickle')
 
         # Ensure the subdirectory exists * note, probably redundant because the initialize_caught_species function always runs this first, so can probably delete. 
-        os.makedirs(f'./player_data/.{self.username}', exist_ok=True)
+        os.makedirs(get_asset_path(f'./player_data/.{self.username}'), exist_ok=True)
 
         # Write file
         if not os.path.exists(filepath):
             with open(filepath, 'wb') as file:
                 pickle.dump(self.achievements,file)
-        with open(f'./player_data/.{self.username}/.{self.username}.achievements.pickle', 'rb') as file:
+        with open(get_asset_path(f'./player_data/.{self.username}/.{self.username}.achievements.pickle'), 'rb') as file:
             try:
                 pickle_data = pickle.load(file)
             except:
@@ -273,21 +288,21 @@ class Player:
 
     def pickle_dump_data(self):
         '''pickles all player information into files'''
-        with open(f'./player_data/.{self.username}/.{self.username}.caught_species.pickle', 'wb') as file:
+        with open(get_asset_path(f'./player_data/.{self.username}/.{self.username}.caught_species.pickle'), 'wb') as file:
             pickle.dump(self.caught_species,file)
-        with open(f'./player_data/.{self.username}/.{self.username}.caught_fish.pickle', 'wb') as file:
+        with open(get_asset_path(f'./player_data/.{self.username}/.{self.username}.caught_fish.pickle'), 'wb') as file:
             pickle.dump(self.caught_fish,file)
-        with open(f'./player_data/.{self.username}/.{self.username}.inventory.pickle', 'wb') as file:
+        with open(get_asset_path(f'./player_data/.{self.username}/.{self.username}.inventory.pickle'), 'wb') as file:
             pickle.dump(self.inventory,file)
-        with open(f'./player_data/.{self.username}/.{self.username}.gold.pickle', 'wb') as file:
+        with open(get_asset_path(f'./player_data/.{self.username}/.{self.username}.gold.pickle'), 'wb') as file:
             pickle.dump(self.gold,file)
-        with open(f'./player_data/.{self.username}/.{self.username}.locations.pickle', 'wb') as file:
+        with open(get_asset_path(f'./player_data/.{self.username}/.{self.username}.locations.pickle'), 'wb') as file:
             pickle.dump(self.unlocked_locations,file)
-        with open(f'./player_data/.{self.username}/.{self.username}.xp.pickle', 'wb') as file:
+        with open(get_asset_path(f'./player_data/.{self.username}/.{self.username}.xp.pickle'), 'wb') as file:
             pickle.dump(self.xp,file)
-        with open(f'./player_data/.{self.username}/.{self.username}.gear.pickle', 'wb') as file:
+        with open(get_asset_path(f'./player_data/.{self.username}/.{self.username}.gear.pickle'), 'wb') as file:
             pickle.dump(self.gear,file)
-        with open(f'./player_data/.{self.username}/.{self.username}.achievements.pickle', 'wb') as file:
+        with open(get_asset_path(f'./player_data/.{self.username}/.{self.username}.achievements.pickle'), 'wb') as file:
             pickle.dump(self.achievements,file)
         
 
