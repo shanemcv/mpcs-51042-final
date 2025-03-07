@@ -1,6 +1,14 @@
 # mpcs-51042-final
 Final Project for MPCS 51042 (Fishing Game)
 
+GENERAL INFORMATION - read this first!
+
+(1) Game source files are uploaded to this GitHub repo. You can play the game by downloading the repo and running the main.py file. 
+
+(2) I created an executable for the game as well. You can access this executable file at ([THIS LINK](https://drive.google.com/file/d/1ppSA2mexJ1v30JTZvjciEUA4Y5pY6CZC/view?usp=sharing)). I did not include it in the github repo because it is too large. 
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 Project Overview (Fishing Game - from Proposal)
 
 I have always liked basic desktop games and applications, like Minesweeper or Solitaire. My first idea for a project would be to create a fun game that can be packaged into an executable program using tkinter or another basic UI toolkit. I have an idea for a fishing game where the player can: 
