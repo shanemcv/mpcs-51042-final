@@ -1,0 +1,8 @@
+pyinstaller --onefile --windowed --icon=images/icon.ico --add-data "images;images" --add-data "help.txt;." --add-data "player_data;player_data" "C:\Users\mcvei\Desktop\UChicago Winter 25\MPCS-51042-Python\mpcs-51042-final\main.py"
+
+run in windows powershell
+
+Note - you may need to turn off Real-time protection under "Virus and threat protection settings" in Windows settings, 
+so that pyinstaller can create the executable. 
+
+Also >> go to Windows Security, Virus and Threat Protection Settings, Add Exclusion, and then add the folder / .exe to the exclusions
